@@ -1,0 +1,7 @@
+# Ignore actual .env file
+.env
+
+# Ignore any files with potential secrets
+*.pem
+*.key
+*.token
