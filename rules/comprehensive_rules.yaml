@@ -1,0 +1,35 @@
+rules:
+- id: security-vulnerability-checks
+  patterns:
+  - languages:
+    - rust
+    - python
+    message: Potential panic or unhandled error risk
+    pattern: .unwrap()
+    severity: WARNING
+  - languages:
+    - python
+    - javascript
+    message: Avoid using eval() - severe security risk
+    pattern: eval(
+    severity: HIGH
+  - languages:
+    - python
+    message: Potential command injection vulnerability
+    pattern: os.system(
+    severity: HIGH
+- id: code-quality-checks
+  patterns:
+  - languages:
+    - python
+    - javascript
+    - java
+    - rust
+    message: Unresolved TODO comment found
+    pattern: 'TODO:'
+    severity: INFO
+  - languages:
+    - python
+    message: Avoid print statements in production code
+    pattern: print(
+    severity: LOW
