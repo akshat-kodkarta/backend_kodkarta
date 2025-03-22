@@ -1,0 +1,935 @@
+digraph function_connections {
+	graph [rankdir=TB]
+	node [fillcolor=lightblue shape=box style=filled]
+	"code_1.py" [label="code_1.py" fillcolor=lightgray shape=folder]
+	"code_1.py_load_dotenv_30" [label="load_dotenv (Line 30)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_load_dotenv_30"
+	"code_1.py_getenv_33" [label="getenv (Line 33)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_getenv_33"
+	"code_1.py_input_37" [label="input (Line 37)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_input_37"
+	"code_1.py_open_40" [label="open (Line 40)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_40"
+	"code_1.py_write_41" [label="write (Line 41)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_write_41"
+	"code_1.py_lower_82" [label="lower (Line 82)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_lower_82"
+	"code_1.py_splitext_82" [label="splitext (Line 82)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_splitext_82"
+	"code_1.py_get_83" [label="get (Line 83)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_83"
+	"code_1.py_print_90" [label="print (Line 90)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_90"
+	"code_1.py_print_91" [label="print (Line 91)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_91"
+	"code_1.py_print_92" [label="print (Line 92)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_92"
+	"code_1.py_print_93" [label="print (Line 93)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_93"
+	"code_1.py_Digraph_98" [label="Digraph (Line 98)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_Digraph_98"
+	"code_1.py_walk_121" [label="walk (Line 121)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_walk_121"
+	"code_1.py_replace_123" [label="replace (Line 123)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_replace_123"
+	"code_1.py_replace_123" [label="replace (Line 123)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_replace_123"
+	"code_1.py_replace_123" [label="replace (Line 123)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_replace_123"
+	"code_1.py_node_127" [label="node (Line 127)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_node_127"
+	"code_1.py__should_ignore_file_132" [label="_should_ignore_file (Line 132)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__should_ignore_file_132"
+	"code_1.py_detect_language_136" [label="detect_language (Line 136)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_detect_language_136"
+	"code_1.py_node_142" [label="node (Line 142)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_node_142"
+	"code_1.py_get_147" [label="get (Line 147)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_147"
+	"code_1.py_edge_152" [label="edge (Line 152)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_edge_152"
+	"code_1.py_render_155" [label="render (Line 155)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_render_155"
+	"code_1.py_print_156" [label="print (Line 156)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_156"
+	"code_1.py_print_159" [label="print (Line 159)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_159"
+	"code_1.py_print_160" [label="print (Line 160)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_160"
+	"code_1.py_walk_175" [label="walk (Line 175)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_walk_175"
+	"code_1.py_len_177" [label="len (Line 177)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_177"
+	"code_1.py__should_ignore_file_181" [label="_should_ignore_file (Line 181)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__should_ignore_file_181"
+	"code_1.py_detect_language_188" [label="detect_language (Line 188)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_detect_language_188"
+	"code_1.py_append_198" [label="append (Line 198)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_198"
+	"code_1.py_join_198" [label="join (Line 198)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_join_198"
+	"code_1.py_splitext_201" [label="splitext (Line 201)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_splitext_201"
+	"code_1.py_get_203" [label="get (Line 203)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_203"
+	"code_1.py_any_312" [label="any (Line 312)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_any_312"
+	"code_1.py_search_312" [label="search (Line 312)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_search_312"
+	"code_1.py_scan_project_structure_319" [label="scan_project_structure (Line 319)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_scan_project_structure_319"
+	"code_1.py_generate_uml_diagram_322" [label="generate_uml_diagram (Line 322)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_generate_uml_diagram_322"
+	"code_1.py_print_325" [label="print (Line 325)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_325"
+	"code_1.py_print_328" [label="print (Line 328)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_328"
+	"code_1.py_items_329" [label="items (Line 329)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_329"
+	"code_1.py_print_330" [label="print (Line 330)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_330"
+	"code_1.py_print_331" [label="print (Line 331)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_331"
+	"code_1.py_print_332" [label="print (Line 332)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_332"
+	"code_1.py_print_334" [label="print (Line 334)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_334"
+	"code_1.py_len_335" [label="len (Line 335)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_335"
+	"code_1.py_print_336" [label="print (Line 336)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_336"
+	"code_1.py_len_336" [label="len (Line 336)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_336"
+	"code_1.py_print_339" [label="print (Line 339)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_339"
+	"code_1.py_print_340" [label="print (Line 340)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_340"
+	"code_1.py_print_341" [label="print (Line 341)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_341"
+	"code_1.py_print_343" [label="print (Line 343)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_343"
+	"code_1.py_items_344" [label="items (Line 344)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_344"
+	"code_1.py_print_345" [label="print (Line 345)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_345"
+	"code_1.py_open_348" [label="open (Line 348)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_348"
+	"code_1.py_dump_349" [label="dump (Line 349)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_dump_349"
+	"code_1.py_print_355" [label="print (Line 355)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_355"
+	"code_1.py_walk_378" [label="walk (Line 378)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_walk_378"
+	"code_1.py__should_ignore_file_381" [label="_should_ignore_file (Line 381)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__should_ignore_file_381"
+	"code_1.py_join_384" [label="join (Line 384)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_join_384"
+	"code_1.py__identify_iac_files_387" [label="_identify_iac_files (Line 387)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__identify_iac_files_387"
+	"code_1.py__identify_dependency_files_390" [label="_identify_dependency_files (Line 390)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__identify_dependency_files_390"
+	"code_1.py__scan_for_secrets_393" [label="_scan_for_secrets (Line 393)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__scan_for_secrets_393"
+	"code_1.py_print_403" [label="print (Line 403)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_403"
+	"code_1.py_items_404" [label="items (Line 404)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_404"
+	"code_1.py_print_406" [label="print (Line 406)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_406"
+	"code_1.py_capitalize_406" [label="capitalize (Line 406)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_capitalize_406"
+	"code_1.py_print_408" [label="print (Line 408)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_408"
+	"code_1.py_print_410" [label="print (Line 410)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_410"
+	"code_1.py_items_411" [label="items (Line 411)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_411"
+	"code_1.py_print_413" [label="print (Line 413)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_413"
+	"code_1.py_capitalize_413" [label="capitalize (Line 413)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_capitalize_413"
+	"code_1.py_print_415" [label="print (Line 415)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_415"
+	"code_1.py_print_417" [label="print (Line 417)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_417"
+	"code_1.py_print_419" [label="print (Line 419)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_419"
+	"code_1.py_print_421" [label="print (Line 421)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_421"
+	"code_1.py_print_423" [label="print (Line 423)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_423"
+	"code_1.py_open_426" [label="open (Line 426)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_426"
+	"code_1.py_dump_427" [label="dump (Line 427)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_dump_427"
+	"code_1.py_print_429" [label="print (Line 429)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_429"
+	"code_1.py_basename_437" [label="basename (Line 437)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_basename_437"
+	"code_1.py_lower_438" [label="lower (Line 438)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_lower_438"
+	"code_1.py_splitext_438" [label="splitext (Line 438)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_splitext_438"
+	"code_1.py_append_442" [label="append (Line 442)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_442"
+	"code_1.py__is_cloudformation_445" [label="_is_cloudformation (Line 445)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__is_cloudformation_445"
+	"code_1.py_append_446" [label="append (Line 446)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_446"
+	"code_1.py_append_450" [label="append (Line 450)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_450"
+	"code_1.py__is_kubernetes_453" [label="_is_kubernetes (Line 453)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__is_kubernetes_453"
+	"code_1.py_append_454" [label="append (Line 454)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_454"
+	"code_1.py_startswith_457" [label="startswith (Line 457)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_startswith_457"
+	"code_1.py_append_458" [label="append (Line 458)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_458"
+	"code_1.py_append_462" [label="append (Line 462)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_462"
+	"code_1.py_open_469" [label="open (Line 469)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_469"
+	"code_1.py_read_470" [label="read (Line 470)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_read_470"
+	"code_1.py_endswith_472" [label="endswith (Line 472)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_endswith_472"
+	"code_1.py_loads_473" [label="loads (Line 473)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_loads_473"
+	"code_1.py_safe_load_475" [label="safe_load (Line 475)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_safe_load_475"
+	"code_1.py_isinstance_478" [label="isinstance (Line 478)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_isinstance_478"
+	"code_1.py_next_479" [label="next (Line 479)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_next_479"
+	"code_1.py_iter_479" [label="iter (Line 479)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_iter_479"
+	"code_1.py_values_479" [label="values (Line 479)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_values_479"
+	"code_1.py_get_479" [label="get (Line 479)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_479"
+	"code_1.py_open_491" [label="open (Line 491)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_491"
+	"code_1.py_read_492" [label="read (Line 492)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_read_492"
+	"code_1.py_safe_load_493" [label="safe_load (Line 493)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_safe_load_493"
+	"code_1.py_isinstance_496" [label="isinstance (Line 496)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_isinstance_496"
+	"code_1.py_basename_507" [label="basename (Line 507)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_basename_507"
+	"code_1.py_append_511" [label="append (Line 511)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_511"
+	"code_1.py_append_515" [label="append (Line 515)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_515"
+	"code_1.py_append_519" [label="append (Line 519)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_519"
+	"code_1.py_append_523" [label="append (Line 523)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_523"
+	"code_1.py_append_527" [label="append (Line 527)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_527"
+	"code_1.py_append_531" [label="append (Line 531)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_531"
+	"code_1.py__is_binary_file_538" [label="_is_binary_file (Line 538)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__is_binary_file_538"
+	"code_1.py_open_556" [label="open (Line 556)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_556"
+	"code_1.py_enumerate_557" [label="enumerate (Line 557)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_enumerate_557"
+	"code_1.py_items_558" [label="items (Line 558)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_558"
+	"code_1.py_search_559" [label="search (Line 559)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_search_559"
+	"code_1.py_append_561" [label="append (Line 561)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_561"
+	"code_1.py_print_568" [label="print (Line 568)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_568"
+	"code_1.py_open_575" [label="open (Line 575)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_575"
+	"code_1.py_read_576" [label="read (Line 576)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_read_576"
+	"code_1.py_print_588" [label="print (Line 588)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_588"
+	"code_1.py_print_591" [label="print (Line 591)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_591"
+	"code_1.py_split_595" [label="split (Line 595)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_split_595"
+	"code_1.py_rstrip_595" [label="rstrip (Line 595)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_rstrip_595"
+	"code_1.py_Github_600" [label="Github (Line 600)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_Github_600"
+	"code_1.py_Github_600" [label="Github (Line 600)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_Github_600"
+	"code_1.py_get_repo_603" [label="get_repo (Line 603)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_repo_603"
+	"code_1.py_exists_608" [label="exists (Line 608)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_exists_608"
+	"code_1.py_exists_611" [label="exists (Line 611)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_exists_611"
+	"code_1.py_open_612" [label="open (Line 612)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_612"
+	"code_1.py_load_613" [label="load (Line 613)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_load_613"
+	"code_1.py_get_617" [label="get (Line 617)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_617"
+	"code_1.py_get_rate_limit_641" [label="get_rate_limit (Line 641)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_rate_limit_641"
+	"code_1.py_print_642" [label="print (Line 642)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_642"
+	"code_1.py_print_648" [label="print (Line 648)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_648"
+	"code_1.py__get_repo_contents_batch_649" [label="_get_repo_contents_batch (Line 649)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__get_repo_contents_batch_649"
+	"code_1.py__get_repo_contents_batch_651" [label="_get_repo_contents_batch (Line 651)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__get_repo_contents_batch_651"
+	"code_1.py_print_657" [label="print (Line 657)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_657"
+	"code_1.py_len_657" [label="len (Line 657)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_657"
+	"code_1.py__should_ignore_file_667" [label="_should_ignore_file (Line 667)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__should_ignore_file_667"
+	"code_1.py_append_668" [label="append (Line 668)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_668"
+	"code_1.py_decode_673" [label="decode (Line 673)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_decode_673"
+	"code_1.py_get_contents_673" [label="get_contents (Line 673)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_contents_673"
+	"code_1.py__identify_github_iac_files_676" [label="_identify_github_iac_files (Line 676)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__identify_github_iac_files_676"
+	"code_1.py__identify_github_dependency_files_679" [label="_identify_github_dependency_files (Line 679)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__identify_github_dependency_files_679"
+	"code_1.py__scan_github_file_for_secrets_682" [label="_scan_github_file_for_secrets (Line 682)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__scan_github_file_for_secrets_682"
+	"code_1.py_append_685" [label="append (Line 685)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_685"
+	"code_1.py_len_688" [label="len (Line 688)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_688"
+	"code_1.py__save_github_scan_report_689" [label="_save_github_scan_report (Line 689)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__save_github_scan_report_689"
+	"code_1.py_print_694" [label="print (Line 694)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_694"
+	"code_1.py_len_694" [label="len (Line 694)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_694"
+	"code_1.py_get_rate_limit_698" [label="get_rate_limit (Line 698)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_rate_limit_698"
+	"code_1.py_total_seconds_699" [label="total_seconds (Line 699)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_total_seconds_699"
+	"code_1.py_utcnow_699" [label="utcnow (Line 699)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_utcnow_699"
+	"code_1.py__save_github_scan_report_702" [label="_save_github_scan_report (Line 702)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__save_github_scan_report_702"
+	"code_1.py_print_706" [label="print (Line 706)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_706"
+	"code_1.py_print_707" [label="print (Line 707)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_707"
+	"code_1.py_print_708" [label="print (Line 708)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_708"
+	"code_1.py_print_709" [label="print (Line 709)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_709"
+	"code_1.py_print_710" [label="print (Line 710)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_710"
+	"code_1.py_str_720" [label="str (Line 720)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_str_720"
+	"code_1.py_print_724" [label="print (Line 724)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_724"
+	"code_1.py_get_rate_limit_728" [label="get_rate_limit (Line 728)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_rate_limit_728"
+	"code_1.py_total_seconds_731" [label="total_seconds (Line 731)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_total_seconds_731"
+	"code_1.py_utcnow_731" [label="utcnow (Line 731)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_utcnow_731"
+	"code_1.py__save_github_scan_report_735" [label="_save_github_scan_report (Line 735)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__save_github_scan_report_735"
+	"code_1.py_print_740" [label="print (Line 740)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_740"
+	"code_1.py__save_github_scan_report_742" [label="_save_github_scan_report (Line 742)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__save_github_scan_report_742"
+	"code_1.py_str_754" [label="str (Line 754)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_str_754"
+	"code_1.py_now_754" [label="now (Line 754)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_now_754"
+	"code_1.py_print_758" [label="print (Line 758)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_758"
+	"code_1.py_items_759" [label="items (Line 759)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_759"
+	"code_1.py_print_761" [label="print (Line 761)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_761"
+	"code_1.py_capitalize_761" [label="capitalize (Line 761)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_capitalize_761"
+	"code_1.py_print_763" [label="print (Line 763)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_763"
+	"code_1.py_len_764" [label="len (Line 764)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_764"
+	"code_1.py_print_765" [label="print (Line 765)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_765"
+	"code_1.py_len_765" [label="len (Line 765)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_765"
+	"code_1.py_print_767" [label="print (Line 767)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_767"
+	"code_1.py_items_768" [label="items (Line 768)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_768"
+	"code_1.py_print_770" [label="print (Line 770)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_770"
+	"code_1.py_capitalize_770" [label="capitalize (Line 770)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_capitalize_770"
+	"code_1.py_print_772" [label="print (Line 772)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_772"
+	"code_1.py_len_773" [label="len (Line 773)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_773"
+	"code_1.py_print_774" [label="print (Line 774)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_774"
+	"code_1.py_len_774" [label="len (Line 774)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_774"
+	"code_1.py_print_776" [label="print (Line 776)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_776"
+	"code_1.py_print_778" [label="print (Line 778)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_778"
+	"code_1.py_print_780" [label="print (Line 780)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_780"
+	"code_1.py_len_781" [label="len (Line 781)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_781"
+	"code_1.py_print_782" [label="print (Line 782)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_782"
+	"code_1.py_len_782" [label="len (Line 782)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_782"
+	"code_1.py_print_784" [label="print (Line 784)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_784"
+	"code_1.py_open_787" [label="open (Line 787)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_787"
+	"code_1.py_dump_788" [label="dump (Line 788)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_dump_788"
+	"code_1.py_print_790" [label="print (Line 790)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_790"
+	"code_1.py_print_791" [label="print (Line 791)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_791"
+	"code_1.py_len_791" [label="len (Line 791)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_791"
+	"code_1.py_generate_mesh_map_html_795" [label="generate_mesh_map_html (Line 795)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_generate_mesh_map_html_795"
+	"code_1.py_generate_asset_connection_graph_799" [label="generate_asset_connection_graph (Line 799)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_generate_asset_connection_graph_799"
+	"code_1.py_print_804" [label="print (Line 804)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_804"
+	"code_1.py__get_repo_contents_816" [label="_get_repo_contents (Line 816)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__get_repo_contents_816"
+	"code_1.py_append_817" [label="append (Line 817)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_817"
+	"code_1.py_len_820" [label="len (Line 820)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_820"
+	"code_1.py_print_829" [label="print (Line 829)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_829"
+	"code_1.py_str_847" [label="str (Line 847)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_str_847"
+	"code_1.py_now_847" [label="now (Line 847)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_now_847"
+	"code_1.py_open_850" [label="open (Line 850)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_850"
+	"code_1.py_dump_851" [label="dump (Line 851)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_dump_851"
+	"code_1.py_print_860" [label="print (Line 860)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_860"
+	"code_1.py_print_863" [label="print (Line 863)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_863"
+	"code_1.py_split_866" [label="split (Line 866)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_split_866"
+	"code_1.py_rstrip_866" [label="rstrip (Line 866)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_rstrip_866"
+	"code_1.py_scan_github_repo_874" [label="scan_github_repo (Line 874)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_scan_github_repo_874"
+	"code_1.py_get_878" [label="get (Line 878)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_878"
+	"code_1.py_get_879" [label="get (Line 879)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_879"
+	"code_1.py_get_880" [label="get (Line 880)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_880"
+	"code_1.py_fromisoformat_884" [label="fromisoformat (Line 884)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_fromisoformat_884"
+	"code_1.py_total_seconds_885" [label="total_seconds (Line 885)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_total_seconds_885"
+	"code_1.py_utcnow_885" [label="utcnow (Line 885)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_utcnow_885"
+	"code_1.py_print_888" [label="print (Line 888)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_888"
+	"code_1.py_print_889" [label="print (Line 889)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_889"
+	"code_1.py_now_889" [label="now (Line 889)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_now_889"
+	"code_1.py_print_890" [label="print (Line 890)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_890"
+	"code_1.py_sleep_893" [label="sleep (Line 893)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_sleep_893"
+	"code_1.py_print_895" [label="print (Line 895)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_895"
+	"code_1.py_print_897" [label="print (Line 897)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_897"
+	"code_1.py_sleep_898" [label="sleep (Line 898)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_sleep_898"
+	"code_1.py_print_901" [label="print (Line 901)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_901"
+	"code_1.py_scan_github_repo_902" [label="scan_github_repo (Line 902)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_scan_github_repo_902"
+	"code_1.py_print_905" [label="print (Line 905)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_905"
+	"code_1.py_get_908" [label="get (Line 908)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_908"
+	"code_1.py_split_909" [label="split (Line 909)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_split_909"
+	"code_1.py_rstrip_909" [label="rstrip (Line 909)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_rstrip_909"
+	"code_1.py_generate_mesh_map_html_913" [label="generate_mesh_map_html (Line 913)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_generate_mesh_map_html_913"
+	"code_1.py_items_924" [label="items (Line 924)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_924"
+	"code_1.py_get_924" [label="get (Line 924)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_924"
+	"code_1.py_append_926" [label="append (Line 926)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_926"
+	"code_1.py_items_929" [label="items (Line 929)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_929"
+	"code_1.py_get_929" [label="get (Line 929)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_929"
+	"code_1.py_append_931" [label="append (Line 931)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_931"
+	"code_1.py_get_934" [label="get (Line 934)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_934"
+	"code_1.py_get_935" [label="get (Line 935)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_935"
+	"code_1.py_append_937" [label="append (Line 937)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_937"
+	"code_1.py_split_948" [label="split (Line 948)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_split_948"
+	"code_1.py_get_948" [label="get (Line 948)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_948"
+	"code_1.py_append_949" [label="append (Line 949)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_949"
+	"code_1.py_items_976" [label="items (Line 976)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_976"
+	"code_1.py_append_977" [label="append (Line 977)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_977"
+	"code_1.py_len_978" [label="len (Line 978)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_978"
+	"code_1.py_len_984" [label="len (Line 984)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_984"
+	"code_1.py_append_987" [label="append (Line 987)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_987"
+	"code_1.py_split_996" [label="split (Line 996)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_split_996"
+	"code_1.py_append_1000" [label="append (Line 1000)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1000"
+	"code_1.py_len_1001" [label="len (Line 1001)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_1001"
+	"code_1.py_len_1008" [label="len (Line 1008)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_len_1008"
+	"code_1.py_append_1012" [label="append (Line 1012)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1012"
+	"code_1.py__add_asset_connections_1020" [label="_add_asset_connections (Line 1020)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__add_asset_connections_1020"
+	"code_1.py__add_asset_connections_1023" [label="_add_asset_connections (Line 1023)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__add_asset_connections_1023"
+	"code_1.py__add_asset_connections_1024" [label="_add_asset_connections (Line 1024)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__add_asset_connections_1024"
+	"code_1.py__add_asset_connections_1025" [label="_add_asset_connections (Line 1025)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__add_asset_connections_1025"
+	"code_1.py__add_asset_connections_1026" [label="_add_asset_connections (Line 1026)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__add_asset_connections_1026"
+	"code_1.py_get_1029" [label="get (Line 1029)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_1029"
+	"code_1.py_get_1030" [label="get (Line 1030)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_1030"
+	"code_1.py_append_1039" [label="append (Line 1039)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1039"
+	"code_1.py_open_1051" [label="open (Line 1051)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_1051"
+	"code_1.py_write_1052" [label="write (Line 1052)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_write_1052"
+	"code_1.py_print_1054" [label="print (Line 1054)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1054"
+	"code_1.py_print_1058" [label="print (Line 1058)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1058"
+	"code_1.py_get_1069" [label="get (Line 1069)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_1069"
+	"code_1.py_capitalize_1069" [label="capitalize (Line 1069)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_capitalize_1069"
+	"code_1.py_get_1069" [label="get (Line 1069)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_1069"
+	"code_1.py_title_1069" [label="title (Line 1069)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_title_1069"
+	"code_1.py_replace_1069" [label="replace (Line 1069)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_replace_1069"
+	"code_1.py_get_1071" [label="get (Line 1071)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_1071"
+	"code_1.py_capitalize_1071" [label="capitalize (Line 1071)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_capitalize_1071"
+	"code_1.py_get_1071" [label="get (Line 1071)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_1071"
+	"code_1.py_title_1071" [label="title (Line 1071)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_title_1071"
+	"code_1.py_replace_1071" [label="replace (Line 1071)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_replace_1071"
+	"code_1.py_any_1076" [label="any (Line 1076)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_any_1076"
+	"code_1.py_append_1077" [label="append (Line 1077)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1077"
+	"code_1.py___init___1086" [label="__init__ (Line 1086)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py___init___1086"
+	"code_1.py_super_1086" [label="super (Line 1086)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_super_1086"
+	"code_1.py_open_1100" [label="open (Line 1100)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_1100"
+	"code_1.py_read_1101" [label="read (Line 1101)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_read_1101"
+	"code_1.py_parse_1102" [label="parse (Line 1102)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_parse_1102"
+	"code_1.py__analyze_imports_1105" [label="_analyze_imports (Line 1105)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__analyze_imports_1105"
+	"code_1.py__analyze_functions_1108" [label="_analyze_functions (Line 1108)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__analyze_functions_1108"
+	"code_1.py__analyze_classes_1111" [label="_analyze_classes (Line 1111)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__analyze_classes_1111"
+	"code_1.py__analyze_function_connections_1114" [label="_analyze_function_connections (Line 1114)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__analyze_function_connections_1114"
+	"code_1.py_print_1117" [label="print (Line 1117)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1117"
+	"code_1.py_walk_1124" [label="walk (Line 1124)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_walk_1124"
+	"code_1.py_isinstance_1125" [label="isinstance (Line 1125)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_isinstance_1125"
+	"code_1.py_append_1127" [label="append (Line 1127)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1127"
+	"code_1.py_isinstance_1128" [label="isinstance (Line 1128)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_isinstance_1128"
+	"code_1.py_append_1132" [label="append (Line 1132)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1132"
+	"code_1.py_walk_1142" [label="walk (Line 1142)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_walk_1142"
+	"code_1.py_isinstance_1143" [label="isinstance (Line 1143)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_isinstance_1143"
+	"code_1.py_isinstance_1148" [label="isinstance (Line 1148)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_isinstance_1148"
+	"code_1.py_str_1148" [label="str (Line 1148)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_str_1148"
+	"code_1.py_append_1150" [label="append (Line 1150)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1150"
+	"code_1.py_walk_1160" [label="walk (Line 1160)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_walk_1160"
+	"code_1.py_isinstance_1161" [label="isinstance (Line 1161)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_isinstance_1161"
+	"code_1.py_isinstance_1165" [label="isinstance (Line 1165)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_isinstance_1165"
+	"code_1.py_str_1165" [label="str (Line 1165)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_str_1165"
+	"code_1.py_isinstance_1171" [label="isinstance (Line 1171)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_isinstance_1171"
+	"code_1.py_append_1177" [label="append (Line 1177)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1177"
+	"code_1.py_append_1179" [label="append (Line 1179)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1179"
+	"code_1.py_isinstance_1197" [label="isinstance (Line 1197)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_isinstance_1197"
+	"code_1.py_append_1203" [label="append (Line 1203)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1203"
+	"code_1.py_isinstance_1204" [label="isinstance (Line 1204)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_isinstance_1204"
+	"code_1.py_isinstance_1207" [label="isinstance (Line 1207)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_isinstance_1207"
+	"code_1.py_append_1211" [label="append (Line 1211)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1211"
+	"code_1.py_print_1213" [label="print (Line 1213)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1213"
+	"code_1.py_generic_visit_1215" [label="generic_visit (Line 1215)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_generic_visit_1215"
+	"code_1.py_FunctionCallVisitor_1218" [label="FunctionCallVisitor (Line 1218)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_FunctionCallVisitor_1218"
+	"code_1.py_visit_1219" [label="visit (Line 1219)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_visit_1219"
+	"code_1.py_print_1229" [label="print (Line 1229)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1229"
+	"code_1.py_Digraph_1234" [label="Digraph (Line 1234)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_Digraph_1234"
+	"code_1.py_set_1253" [label="set (Line 1253)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_set_1253"
+	"code_1.py_items_1256" [label="items (Line 1256)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_1256"
+	"code_1.py_basename_1258" [label="basename (Line 1258)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_basename_1258"
+	"code_1.py_node_1260" [label="node (Line 1260)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_node_1260"
+	"code_1.py_add_1261" [label="add (Line 1261)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_add_1261"
+	"code_1.py_node_1269" [label="node (Line 1269)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_node_1269"
+	"code_1.py_get_1273" [label="get (Line 1273)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_1273"
+	"code_1.py_get_1273" [label="get (Line 1273)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_1273"
+	"code_1.py_edge_1277" [label="edge (Line 1277)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_edge_1277"
+	"code_1.py_render_1280" [label="render (Line 1280)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_render_1280"
+	"code_1.py_print_1281" [label="print (Line 1281)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1281"
+	"code_1.py_open_1284" [label="open (Line 1284)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_1284"
+	"code_1.py_read_1285" [label="read (Line 1285)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_read_1285"
+	"code_1.py_print_1288" [label="print (Line 1288)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1288"
+	"code_1.py_walk_1296" [label="walk (Line 1296)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_walk_1296"
+	"code_1.py_endswith_1298" [label="endswith (Line 1298)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_endswith_1298"
+	"code_1.py_join_1299" [label="join (Line 1299)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_join_1299"
+	"code_1.py_analyze_python_file_1300" [label="analyze_python_file (Line 1300)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_analyze_python_file_1300"
+	"code_1.py_generate_function_connection_diagram_1303" [label="generate_function_connection_diagram (Line 1303)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_generate_function_connection_diagram_1303"
+	"code_1.py_print_1314" [label="print (Line 1314)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1314"
+	"code_1.py_print_1317" [label="print (Line 1317)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1317"
+	"code_1.py_items_1318" [label="items (Line 1318)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_1318"
+	"code_1.py_print_1319" [label="print (Line 1319)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1319"
+	"code_1.py_print_1320" [label="print (Line 1320)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1320"
+	"code_1.py_print_1322" [label="print (Line 1322)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1322"
+	"code_1.py_print_1325" [label="print (Line 1325)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1325"
+	"code_1.py_items_1326" [label="items (Line 1326)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_1326"
+	"code_1.py_print_1327" [label="print (Line 1327)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1327"
+	"code_1.py_print_1329" [label="print (Line 1329)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1329"
+	"code_1.py_print_1330" [label="print (Line 1330)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1330"
+	"code_1.py_print_1331" [label="print (Line 1331)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1331"
+	"code_1.py_print_1332" [label="print (Line 1332)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1332"
+	"code_1.py_print_1335" [label="print (Line 1335)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1335"
+	"code_1.py_items_1336" [label="items (Line 1336)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_1336"
+	"code_1.py_print_1337" [label="print (Line 1337)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1337"
+	"code_1.py_print_1339" [label="print (Line 1339)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1339"
+	"code_1.py_print_1340" [label="print (Line 1340)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1340"
+	"code_1.py_print_1341" [label="print (Line 1341)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1341"
+	"code_1.py_print_1342" [label="print (Line 1342)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1342"
+	"code_1.py_print_1344" [label="print (Line 1344)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1344"
+	"code_1.py_print_1347" [label="print (Line 1347)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1347"
+	"code_1.py_items_1348" [label="items (Line 1348)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_1348"
+	"code_1.py_print_1349" [label="print (Line 1349)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1349"
+	"code_1.py_print_1352" [label="print (Line 1352)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1352"
+	"code_1.py_print_1354" [label="print (Line 1354)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1354"
+	"code_1.py_open_1357" [label="open (Line 1357)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_1357"
+	"code_1.py_dump_1358" [label="dump (Line 1358)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_dump_1358"
+	"code_1.py_print_1360" [label="print (Line 1360)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1360"
+	"code_1.py_scan_project_structure_1367" [label="scan_project_structure (Line 1367)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_scan_project_structure_1367"
+	"code_1.py__generate_svg_diagram_1370" [label="_generate_svg_diagram (Line 1370)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__generate_svg_diagram_1370"
+	"code_1.py_walk_1373" [label="walk (Line 1373)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_walk_1373"
+	"code_1.py_endswith_1375" [label="endswith (Line 1375)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_endswith_1375"
+	"code_1.py_join_1376" [label="join (Line 1376)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_join_1376"
+	"code_1.py_analyze_python_file_1377" [label="analyze_python_file (Line 1377)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_analyze_python_file_1377"
+	"code_1.py_generate_function_connection_diagram_1380" [label="generate_function_connection_diagram (Line 1380)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_generate_function_connection_diagram_1380"
+	"code_1.py__create_html_report_1392" [label="_create_html_report (Line 1392)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__create_html_report_1392"
+	"code_1.py_open_1395" [label="open (Line 1395)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_1395"
+	"code_1.py_write_1396" [label="write (Line 1396)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_write_1396"
+	"code_1.py_print_1398" [label="print (Line 1398)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1398"
+	"code_1.py_pipe_1415" [label="pipe (Line 1415)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_pipe_1415"
+	"code_1.py_decode_1418" [label="decode (Line 1418)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_decode_1418"
+	"code_1.py_sub_1421" [label="sub (Line 1421)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_sub_1421"
+	"code_1.py_sub_1422" [label="sub (Line 1422)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_sub_1422"
+	"code_1.py_replace_1423" [label="replace (Line 1423)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_replace_1423"
+	"code_1.py_print_1428" [label="print (Line 1428)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1428"
+	"code_1.py_open_1463" [label="open (Line 1463)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_1463"
+	"code_1.py_read_1464" [label="read (Line 1464)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_read_1464"
+	"code_1.py__inject_graph_data_1467" [label="_inject_graph_data (Line 1467)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__inject_graph_data_1467"
+	"code_1.py_open_1470" [label="open (Line 1470)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_1470"
+	"code_1.py_write_1471" [label="write (Line 1471)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_write_1471"
+	"code_1.py_print_1473" [label="print (Line 1473)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1473"
+	"code_1.py__create_default_asset_map_html_1478" [label="_create_default_asset_map_html (Line 1478)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__create_default_asset_map_html_1478"
+	"code_1.py_open_1480" [label="open (Line 1480)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_1480"
+	"code_1.py_write_1481" [label="write (Line 1481)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_write_1481"
+	"code_1.py_print_1483" [label="print (Line 1483)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1483"
+	"code_1.py_print_1487" [label="print (Line 1487)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1487"
+	"code_1.py__process_code_connection_report_1495" [label="_process_code_connection_report (Line 1495)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__process_code_connection_report_1495"
+	"code_1.py_dumps_1500" [label="dumps (Line 1500)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_dumps_1500"
+	"code_1.py_dumps_1501" [label="dumps (Line 1501)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_dumps_1501"
+	"code_1.py_replace_1506" [label="replace (Line 1506)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_replace_1506"
+	"code_1.py__process_code_connection_report_1515" [label="_process_code_connection_report (Line 1515)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__process_code_connection_report_1515"
+	"code_1.py_replace_1518" [label="replace (Line 1518)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_replace_1518"
+	"code_1.py_replace_1518" [label="replace (Line 1518)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_replace_1518"
+	"code_1.py_dumps_1518" [label="dumps (Line 1518)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_dumps_1518"
+	"code_1.py_replace_1519" [label="replace (Line 1519)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_replace_1519"
+	"code_1.py_replace_1519" [label="replace (Line 1519)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_replace_1519"
+	"code_1.py_dumps_1519" [label="dumps (Line 1519)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_dumps_1519"
+	"code_1.py_print_1664" [label="print (Line 1664)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1664"
+	"code_1.py_str_1672" [label="str (Line 1672)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_str_1672"
+	"code_1.py_append_1689" [label="append (Line 1689)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1689"
+	"code_1.py_items_1704" [label="items (Line 1704)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_1704"
+	"code_1.py_append_1708" [label="append (Line 1708)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1708"
+	"code_1.py_basename_1710" [label="basename (Line 1710)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_basename_1710"
+	"code_1.py_append_1723" [label="append (Line 1723)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1723"
+	"code_1.py_basename_1725" [label="basename (Line 1725)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_basename_1725"
+	"code_1.py_append_1734" [label="append (Line 1734)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1734"
+	"code_1.py_load_code_connection_report_1749" [label="load_code_connection_report (Line 1749)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_load_code_connection_report_1749"
+	"code_1.py__create_code_connection_graph_html_1752" [label="_create_code_connection_graph_html (Line 1752)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__create_code_connection_graph_html_1752"
+	"code_1.py_get_1753" [label="get (Line 1753)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_1753"
+	"code_1.py_get_1754" [label="get (Line 1754)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_1754"
+	"code_1.py_open_1758" [label="open (Line 1758)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_1758"
+	"code_1.py_write_1759" [label="write (Line 1759)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_write_1759"
+	"code_1.py_print_1763" [label="print (Line 1763)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1763"
+	"code_1.py_dumps_1775" [label="dumps (Line 1775)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_dumps_1775"
+	"code_1.py_dumps_1776" [label="dumps (Line 1776)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_dumps_1776"
+	"code_1.py_isabs_1838" [label="isabs (Line 1838)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_isabs_1838"
+	"code_1.py_join_1839" [label="join (Line 1839)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_join_1839"
+	"code_1.py_open_1841" [label="open (Line 1841)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_1841"
+	"code_1.py_load_1842" [label="load (Line 1842)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_load_1842"
+	"code_1.py__process_code_connection_report_1844" [label="_process_code_connection_report (Line 1844)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__process_code_connection_report_1844"
+	"code_1.py_print_1847" [label="print (Line 1847)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1847"
+	"code_1.py_print_1850" [label="print (Line 1850)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1850"
+	"code_1.py_append_1871" [label="append (Line 1871)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1871"
+	"code_1.py_items_1886" [label="items (Line 1886)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_items_1886"
+	"code_1.py_append_1890" [label="append (Line 1890)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1890"
+	"code_1.py_basename_1892" [label="basename (Line 1892)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_basename_1892"
+	"code_1.py_append_1905" [label="append (Line 1905)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1905"
+	"code_1.py_basename_1907" [label="basename (Line 1907)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_basename_1907"
+	"code_1.py_append_1916" [label="append (Line 1916)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_append_1916"
+	"code_1.py_load_code_connection_report_1938" [label="load_code_connection_report (Line 1938)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_load_code_connection_report_1938"
+	"code_1.py__create_code_connection_graph_html_1941" [label="_create_code_connection_graph_html (Line 1941)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py__create_code_connection_graph_html_1941"
+	"code_1.py_get_1942" [label="get (Line 1942)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_1942"
+	"code_1.py_get_1943" [label="get (Line 1943)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_get_1943"
+	"code_1.py_open_1947" [label="open (Line 1947)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_open_1947"
+	"code_1.py_write_1948" [label="write (Line 1948)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_write_1948"
+	"code_1.py_print_1953" [label="print (Line 1953)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1953"
+	"code_1.py_dirname_1957" [label="dirname (Line 1957)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_dirname_1957"
+	"code_1.py_abspath_1957" [label="abspath (Line 1957)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_abspath_1957"
+	"code_1.py_CodeScanner_1958" [label="CodeScanner (Line 1958)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_CodeScanner_1958"
+	"code_1.py_generate_report_1961" [label="generate_report (Line 1961)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_generate_report_1961"
+	"code_1.py_scan_for_iac_and_secrets_1962" [label="scan_for_iac_and_secrets (Line 1962)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_scan_for_iac_and_secrets_1962"
+	"code_1.py_print_1967" [label="print (Line 1967)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1967"
+	"code_1.py_scan_github_repo_1971" [label="scan_github_repo (Line 1971)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_scan_github_repo_1971"
+	"code_1.py_scan_github_repo_async_1976" [label="scan_github_repo_async (Line 1976)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_scan_github_repo_async_1976"
+	"code_1.py_run_1979" [label="run (Line 1979)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_run_1979"
+	"code_1.py_run_scan_1979" [label="run_scan (Line 1979)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_run_scan_1979"
+	"code_1.py_print_1981" [label="print (Line 1981)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1981"
+	"code_1.py_print_1982" [label="print (Line 1982)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1982"
+	"code_1.py_print_1983" [label="print (Line 1983)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1983"
+	"code_1.py_print_1984" [label="print (Line 1984)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_print_1984"
+	"code_1.py_DeepCodeAnalyzer_1987" [label="DeepCodeAnalyzer (Line 1987)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_DeepCodeAnalyzer_1987"
+	"code_1.py_generate_comprehensive_report_1988" [label="generate_comprehensive_report (Line 1988)" fillcolor=lightgreen shape=note]
+	"code_1.py" -> "code_1.py_generate_comprehensive_report_1988"
+	"code_1.py_main_1991" [label="main (Line 1991)" fillcolor=lightblue shape=note]
+	"code_1.py" -> "code_1.py_main_1991"
+}

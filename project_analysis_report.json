@@ -1,0 +1,73 @@
+{
+  "language_stats": {
+    "HTML": {
+      "file_count": 4,
+      "files": [
+        "/Users/akshatjain/Documents/Personal/kodekarta/index.html",
+        "/Users/akshatjain/Documents/Personal/kodekarta/code_connection_graph.html",
+        "/Users/akshatjain/Documents/Personal/kodekarta/asset_map.html",
+        "/Users/akshatjain/Documents/Personal/kodekarta/code_analysis_report.html"
+      ]
+    },
+    "Unknown": {
+      "file_count": 5,
+      "files": [
+        "/Users/akshatjain/Documents/Personal/kodekarta/function_connections.gv.svg",
+        "/Users/akshatjain/Documents/Personal/kodekarta/README.md",
+        "/Users/akshatjain/Documents/Personal/kodekarta/project_uml.gv.png",
+        "/Users/akshatjain/Documents/Personal/kodekarta/project_uml.gv",
+        "/Users/akshatjain/Documents/Personal/kodekarta/function_connections.gv"
+      ]
+    },
+    "JavaScript": {
+      "file_count": 2,
+      "files": [
+        "/Users/akshatjain/Documents/Personal/kodekarta/code_connection_graph_script.js",
+        "/Users/akshatjain/Documents/Personal/kodekarta/asset_map_script.js"
+      ]
+    },
+    "Python": {
+      "file_count": 1,
+      "files": [
+        "/Users/akshatjain/Documents/Personal/kodekarta/code_1.py"
+      ]
+    },
+    "JSON": {
+      "file_count": 3,
+      "files": [
+        "/Users/akshatjain/Documents/Personal/kodekarta/iac_secrets_report.json",
+        "/Users/akshatjain/Documents/Personal/kodekarta/code_connection_report.json",
+        "/Users/akshatjain/Documents/Personal/kodekarta/project_analysis_report.json"
+      ]
+    },
+    "CSS": {
+      "file_count": 2,
+      "files": [
+        "/Users/akshatjain/Documents/Personal/kodekarta/asset_map_styles.css",
+        "/Users/akshatjain/Documents/Personal/kodekarta/code_connection_graph_styles.css"
+      ]
+    },
+    "YAML": {
+      "file_count": 1,
+      "files": [
+        "/Users/akshatjain/Documents/Personal/kodekarta/rules/comprehensive_rules.yaml"
+      ]
+    }
+  },
+  "file_stats": {
+    "total_files": 18,
+    "total_folders": 2,
+    "files_by_extension": {
+      ".html": 4,
+      ".svg": 1,
+      ".js": 2,
+      ".py": 1,
+      ".md": 1,
+      ".png": 1,
+      ".json": 3,
+      ".css": 2,
+      ".gv": 2,
+      ".yaml": 1
+    }
+  }
+}
