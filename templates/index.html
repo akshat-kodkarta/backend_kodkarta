@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repository Explorer</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-gradient">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="my-3">
+                        <i class="fas fa-code-branch me-2"></i>GitHub Repository Explorer
+                    </h2>
+                </div>
+                <div class="card-body p-4">
+                    <form id="repo-form" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="repo-url" class="form-label">
+                                <i class="fas fa-link me-2"></i>GitHub Repository URL
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-lg" 
+                                id="repo-url" 
+                                placeholder="https://github.com/owner/repo"
+                                required
+                            >
+                            <div class="invalid-feedback">
+                                Please enter a valid GitHub repository URL
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="github-token" class="form-label">
+                                <i class="fas fa-key me-2"></i>GitHub Personal Access Token
+                            </label>
+                            <input 
+                                type="password" 
+                                class="form-control form-control-lg" 
+                                id="github-token" 
+                                placeholder="Enter GitHub Personal Access Token"
+                                required
+                            >
+                            <div class="invalid-feedback">
+                                GitHub token is required
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-search me-2"></i>Explore Repository
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="card-footer text-center">
+                    <div id="result-container" class="mt-3">
+                        <pre id="result-output" class="bg-light p-3 rounded"></pre>
+                    </div>
+                    
+                    <div id="log-container" class="mt-3">
+                        <div id="log-output" class="text-start"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center text-white mt-3">
+                <small>&copy; 2024 GitHub Repository Explorer</small>
+            </div>
+        </div>
+    </div>
+
+    <div id="asset-map-container" class="mt-4"></div>
+
+    <script>
+    // Logging utility
+    const Logger = {
+        logOutput: document.getElementById('log-output'),
+        
+        log(message, type = 'info') {
+            const logEntry = document.createElement('div');
+            logEntry.classList.add('log-entry', type);
+            
+            // Add timestamp
+            const timestamp = new Date().toLocaleTimeString();
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            
+            this.logOutput.appendChild(logEntry);
+            
+            // Auto-scroll to bottom
+            this.logOutput.scrollTop = this.logOutput.scrollHeight;
+        },
+
+        clear() {
+            this.logOutput.innerHTML = '';
+        }
+    };
+
+    document.getElementById('repo-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const repoUrl = document.getElementById('repo-url').value;
+        const githubToken = document.getElementById('github-token').value;
+        const resultOutput = document.getElementById('result-output');
+
+        // Enhanced Detailed Logging
+        Logger.log(`🔍 Detailed Network Request Diagnostics`, 'info');
+        Logger.log(`Repository URL: ${repoUrl}`, 'info');
+        Logger.log(`Token Length: ${githubToken.length}`, 'info');
+
+        // Comprehensive Fetch with Detailed Error Handling
+        fetch('/explore_repository', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                repo_url: repoUrl,
+                github_token: githubToken
+            })
+        })
+        .then(response => {
+            // Detailed Response Logging
+            Logger.log(`📡 Response Status: ${response.status}`, 'info');
+            Logger.log(`📋 Response Headers: ${JSON.stringify(Object.fromEntries(response.headers))}`, 'info');
+            
+            // Comprehensive Response Handling
+            if (!response.ok) {
+                return response.text().then(errorText => {
+                    Logger.log(`❌ Error Response Body: ${errorText}`, 'error');
+                    throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Successful Response Processing
+            Logger.log(`✅ Successful Repository Exploration`, 'info');
+            resultOutput.textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+            // Comprehensive Error Logging
+            Logger.log('🚨 Comprehensive Error Details:', 'error');
+            Logger.log(`Error Name: ${error.name}`, 'error');
+            Logger.log(`Error Message: ${error.message}`, 'error');
+            Logger.log(`Error Stack: ${error.stack}`, 'error');
+
+            // Network Error Specific Diagnostics
+            if (error instanceof TypeError) {
+                Logger.log('🌐 Potential Network Connection Issues:', 'warning');
+                Logger.log('- Check server is running', 'warning');
+                Logger.log('- Verify network connectivity', 'warning');
+                Logger.log('- Ensure CORS is configured', 'warning');
+            }
+
+            resultOutput.textContent = `Detailed Error: ${error.message}`;
+        });
+    });
+    </script>
+
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/repository_explorer.js') }}"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</body>
+</html>

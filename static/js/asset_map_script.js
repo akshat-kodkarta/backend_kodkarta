@@ -251,4 +251,161 @@ async function initializeGraph() {
 }
 
 // Initialize on DOM load
-document.addEventListener('DOMContentLoaded', initializeGraph); 
+document.addEventListener('DOMContentLoaded', initializeGraph);
+
+// Asset Connection Map Visualization
+function createAssetConnectionMap(repositoryData) {
+    // Clear previous visualization
+    d3.select("#asset-map-container").selectAll("*").remove();
+
+    // Prepare data for visualization
+    const nodes = [];
+    const links = [];
+
+    // Root node
+    nodes.push({
+        id: 0,
+        name: repositoryData.repository,
+        type: 'root',
+        group: 'repository'
+    });
+
+    // Process repository contents
+    repositoryData.contents.forEach((item, index) => {
+        // Create node for each asset
+        nodes.push({
+            id: index + 1,
+            name: item.name,
+            type: item.type,
+            path: item.path,
+            group: getAssetGroup(item)
+        });
+
+        // Create link from root to asset
+        links.push({
+            source: 0,
+            target: index + 1,
+            value: 1
+        });
+    });
+
+    // D3.js Force-Directed Graph
+    const width = 800;
+    const height = 600;
+
+    const svg = d3.select("#asset-map-container")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    const simulation = d3.forceSimulation(nodes)
+        .force("link", d3.forceLink(links).id(d => d.id))
+        .force("charge", d3.forceManyBody().strength(-200))
+        .force("center", d3.forceCenter(width / 2, height / 2));
+
+    // Create links
+    const link = svg.append("g")
+        .selectAll("line")
+        .data(links)
+        .enter()
+        .append("line")
+        .attr("stroke", "#999")
+        .attr("stroke-opacity", 0.6)
+        .attr("stroke-width", d => Math.sqrt(d.value));
+
+    // Create nodes
+    const node = svg.append("g")
+        .selectAll("circle")
+        .data(nodes)
+        .enter()
+        .append("circle")
+        .attr("r", d => getNodeSize(d))
+        .attr("fill", d => getNodeColor(d))
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+    // Node labels
+    const label = svg.append("g")
+        .selectAll("text")
+        .data(nodes)
+        .enter()
+        .append("text")
+        .text(d => d.name)
+        .attr("font-size", 10)
+        .attr("dx", 12)
+        .attr("dy", 4);
+
+    simulation.on("tick", () => {
+        link
+            .attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+
+        node
+            .attr("cx", d => d.x)
+            .attr("cy", d => d.y);
+
+        label
+            .attr("x", d => d.x)
+            .attr("y", d => d.y);
+    });
+
+    // Drag functions
+    function dragstarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+
+    function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+    }
+
+    function dragended(event, d) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
+}
+
+// Helper functions for node styling
+function getAssetGroup(item) {
+    const fileExtension = item.name.split('.').pop().toLowerCase();
+    const assetGroups = {
+        'py': 'python',
+        'js': 'javascript',
+        'json': 'config',
+        'yaml': 'config',
+        'md': 'documentation',
+        'txt': 'text'
+    };
+    return assetGroups[fileExtension] || 'other';
+}
+
+function getNodeSize(node) {
+    const sizeMap = {
+        'root': 20,
+        'python': 12,
+        'javascript': 10,
+        'config': 8,
+        'documentation': 6,
+        'text': 6
+    };
+    return sizeMap[node.group] || 5;
+}
+
+function getNodeColor(node) {
+    const colorMap = {
+        'root': '#007bff',
+        'python': '#4B8BBE',
+        'javascript': '#F0DB4F',
+        'config': '#6A5ACD',
+        'documentation': '#28a745',
+        'text': '#6c757d'
+    };
+    return colorMap[node.group] || '#343a40';
+} 
