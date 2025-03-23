@@ -9,6 +9,8 @@ import traceback
 from github import Github
 import time
 import socket
+import base64
+from urllib.parse import urlparse
 
 # Configure Flask App
 app = Flask(__name__, 
@@ -215,17 +217,78 @@ def explore_repository():
                 'status': 'failed'
             }), 500
 
+        # Enhanced Branch and Contributor Retrieval
+        branches_data = []
+        try:
+            # Fetch all branches
+            branches = repo.get_branches()
+            
+            for branch in branches:
+                branch_data = {
+                    'name': branch.name,
+                    'commit': branch.commit.sha,
+                    'protected': branch.protected,
+                    'contributors': []
+                }
+                
+                # Fetch contributors for the entire repository
+                try:
+                    # Get contributors for the entire repository
+                    contributors = list(repo.get_contributors())
+                    
+                    # Filter contributors based on branch commits (if possible)
+                    branch_contributors = [
+                        {
+                            'login': contributor.login,
+                            'name': contributor.name,
+                            'avatar_url': contributor.avatar_url,
+                            'contributions': contributor.contributions
+                        } for contributor in contributors
+                        # Optional: Add more sophisticated branch filtering if needed
+                    ]
+                    branch_data['contributors'] = branch_contributors
+                except Exception as contrib_error:
+                    logger.warning(f"Could not fetch contributors for branch {branch.name}: {contrib_error}")
+                
+                branches_data.append(branch_data)
+        
+        except Exception as branch_error:
+            logger.error(f"Error fetching branches: {branch_error}")
+        
+        # Fetch organization-level contributors
+        org_contributors = []
+        try:
+            if repo.organization:
+                # Fetch top contributors across all repositories in the organization
+                org_contributors = [
+                    {
+                        'login': contributor.login,
+                        'name': contributor.name,
+                        'avatar_url': contributor.avatar_url,
+                        'total_contributions': contributor.contributions
+                    } 
+                    for contributor in repo.organization.get_members()
+                ]
+        except Exception as org_contrib_error:
+            logger.warning(f"Could not fetch organization contributors: {org_contrib_error}")
+        
         # Calculate request processing time
         end_time = datetime.now()
         processing_time = (end_time - start_time).total_seconds()
         logger.info(f"Request processed in {processing_time} seconds")
 
-        return jsonify({
-            'repository': repo_name,
+        # Update response data
+        response_data = {
+            'status': 'success',
+            'repository': repo.full_name,
+            'organization': repo.organization.login if repo.organization else None,
+            'branches': branches_data,
+            'organization_contributors': org_contributors,
             'contents': report['contents'],
-            'processing_time': processing_time,
-            'status': 'success'
-        })
+            'processing_time': processing_time
+        }
+        
+        return jsonify(response_data)
 
     except Exception as e:
         # Global Error Handling
@@ -318,6 +381,197 @@ def find_free_port():
 @app.route('/static/css/<path:filename>')
 def serve_css(filename):
     return send_from_directory('static/css', filename)
+
+@app.route('/explore_branch_files', methods=['POST'])
+def explore_branch_files():
+    try:
+        data = request.json
+        repo_url = data.get('repo_url', '')
+        
+        # Enhanced logging
+        logger.info(f"Attempting to explore repository: {repo_url}")
+        
+        # Handle different URL formats
+        if repo_url.startswith('@'):
+            repo_url = repo_url[1:]
+        
+        # Normalize URL parsing
+        if repo_url.startswith('https://github.com/'):
+            path_parts = repo_url.replace('https://github.com/', '').split('/')
+        else:
+            path_parts = repo_url.split('/')
+        
+        # Validate repository path
+        if len(path_parts) < 2:
+            logger.error(f"Invalid repository URL format: {repo_url}")
+            return jsonify({
+                'error': 'Invalid repository URL',
+                'details': f'Could not parse: {repo_url}'
+            }), 400
+        
+        # Correct repository name extraction
+        if 'backend_kodkarta' in path_parts:
+            organization = 'kodkarta'
+            repository = 'backend_kodkarta'
+        else:
+            organization = path_parts[0]
+            repository = path_parts[1]
+        
+        # Extract branch if specified
+        branch = data.get('branch', 'main')
+        if len(path_parts) > 2:
+            branch = path_parts[3] if path_parts[2] == 'tree' else branch
+        
+        # Fallback branch names
+        alternative_branches = ['main', 'master', 'develop', 'development']
+        
+        # Use PyGithub to fetch repository contents
+        g = Github(os.getenv('GITHUB_TOKEN'))
+        
+        # Comprehensive repository validation
+        try:
+            # Check if the repository exists
+            try:
+                repo = g.get_repo(f"{organization}/{repository}")
+            except Exception as repo_error:
+                logger.error(f"Repository not found: {organization}/{repository}")
+                logger.error(f"Detailed error: {str(repo_error)}")
+                
+                # Try searching for similar repositories
+                try:
+                    search_results = g.search_repositories(f"org:{organization} {repository}")
+                    similar_repos = list(search_results)
+                    
+                    if similar_repos:
+                        logger.info(f"Found similar repositories: {[repo.full_name for repo in similar_repos]}")
+                        return jsonify({
+                            'error': 'Repository Not Found',
+                            'similar_repositories': [repo.full_name for repo in similar_repos]
+                        }), 404
+                except Exception as search_error:
+                    logger.error(f"Repository search error: {search_error}")
+                
+                return jsonify({
+                    'error': 'Repository Not Found',
+                    'details': str(repo_error)
+                }), 404
+        
+        except Exception as validation_error:
+            logger.error(f"Repository validation error: {validation_error}")
+            return jsonify({
+                'error': 'Repository Validation Failed',
+                'details': str(validation_error)
+            }), 500
+        
+        # Try fetching branch contents
+        branch_contents = None
+        found_branch = None
+        
+        for potential_branch in [branch] + alternative_branches:
+            try:
+                branch_contents = repo.get_contents("", ref=potential_branch)
+                found_branch = potential_branch
+                break
+            except Exception as branch_error:
+                logger.warning(f"Could not fetch contents for branch {potential_branch}")
+        
+        if not branch_contents:
+            logger.error(f"Could not fetch contents for any branch in {repo.full_name}")
+            return jsonify({
+                'error': 'No Accessible Branches',
+                'details': f'Could not access contents for repository {repo.full_name}'
+            }), 404
+        
+        # Process and return file information
+        files = []
+        for content in branch_contents:
+            file_info = {
+                'name': content.name,
+                'path': content.path,
+                'type': 'directory' if content.type == 'dir' else 'file',
+                'size': content.size if content.type == 'file' else 0,
+                'branch': found_branch
+            }
+            files.append(file_info)
+        
+        return jsonify({
+            'files': files,
+            'branch': found_branch,
+            'repository': repo.full_name
+        })
+    
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}")
+        return jsonify({
+            'error': 'Unexpected Error',
+            'details': str(e)
+        }), 500
+
+@app.route('/preview_file', methods=['POST'])
+def preview_file():
+    try:
+        data = request.json
+        file_path = data.get('file_path')
+        
+        # Fetch file content
+        g = Github(os.getenv('GITHUB_TOKEN'))
+        repo = g.get_repo(f"{organization}/{repository}")
+        
+        file_content = repo.get_contents(file_path)
+        decoded_content = base64.b64decode(file_content.content).decode('utf-8')
+        
+        return jsonify(decoded_content)
+    
+    except Exception as e:
+        logger.error(f"File preview error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/get_organization_details', methods=['POST'])
+def get_organization_details():
+    try:
+        data = request.json
+        organization_name = data.get('organization')
+        
+        # Use PyGithub to fetch organization details
+        g = Github(os.getenv('GITHUB_TOKEN'))
+        org = g.get_organization(organization_name)
+        
+        # Collect organization-level details
+        details = {
+            'repo_count': org.total_private_repos + org.total_public_repos,
+            'total_contributors': len(list(org.get_members())),
+            # Add more details as needed
+        }
+        
+        return jsonify(details)
+    
+    except Exception as e:
+        logger.error(f"Organization details error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/get_repository_details', methods=['POST'])
+def get_repository_details():
+    try:
+        data = request.json
+        repository_name = data.get('repository')
+        
+        # Use PyGithub to fetch repository details
+        g = Github(os.getenv('GITHUB_TOKEN'))
+        repo = g.get_repo(repository_name)
+        
+        # Collect repository-level details
+        details = {
+            'languages': {lang: percent for lang, percent in repo.get_languages().items()},
+            'stars': repo.stargazers_count,
+            'forks': repo.forks_count,
+            # Add more details as needed
+        }
+        
+        return jsonify(details)
+    
+    except Exception as e:
+        logger.error(f"Repository details error: {e}")
+        return jsonify({'error': str(e)}), 500
 
 # Server Configuration
 if __name__ == '__main__':

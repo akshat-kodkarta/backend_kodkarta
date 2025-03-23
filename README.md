@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 # backend_kodkarta
-=======
 What's Happening
 --- Scanning GitHub Repository: https://github.com/facebook/react ---
 Request GET /repos/facebook/react failed with 403: rate limit exceeded
@@ -30,4 +28,3 @@ Do it async based on the heirarchy level of the repository.
     E. scan the secret and the code in the background for the next level of heirarchy.
 
 Make sure we do this based on the number of Github API requests we have for that hour.
->>>>>>> origin/master
