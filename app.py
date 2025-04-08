@@ -573,6 +573,142 @@ def get_repository_details():
         logger.error(f"Repository details error: {e}")
         return jsonify({'error': str(e)}), 500
 
+@app.route('/explore_branch_assets', methods=['POST'])
+def explore_branch_assets():
+    try:
+        data = request.json
+        repo_url = data.get('repo_url')
+        branch = data.get('branch')
+        github_token = data.get('github_token')
+
+        # Initialize GitHub client
+        g = Github(github_token)
+        
+        # Parse repository details
+        repo_parts = repo_url.replace('https://github.com/', '').split('/')
+        organization = repo_parts[0]
+        repository = repo_parts[1]
+        
+        # Get repository
+        repo = g.get_repo(f"{organization}/{repository}")
+        
+        # Discover branch-specific assets
+        branch_assets = {
+            'branch_name': branch,
+            'github_actions': discover_github_actions(repo, branch),
+            'databases': discover_databases(repo, branch),
+            'cloud_projects': discover_cloud_projects(repo, branch)
+        }
+        
+        return jsonify(branch_assets)
+    
+    except Exception as e:
+        logger.error(f"Error exploring branch assets: {e}")
+        return jsonify({
+            'error': 'Failed to explore branch assets',
+            'details': str(e)
+        }), 500
+
+def discover_github_actions(repo, branch):
+    try:
+        # Look for workflow files in .github/workflows directory
+        workflows = []
+        try:
+            workflow_files = repo.get_contents(".github/workflows", ref=branch)
+            for workflow in workflow_files:
+                workflows.append({
+                    'name': workflow.name,
+                    'type': 'GitHub Action',
+                    'path': workflow.path
+                })
+        except Exception as e:
+            logger.warning(f"Could not fetch GitHub Actions: {e}")
+        
+        return workflows
+    except Exception as e:
+        logger.error(f"Error in discover_github_actions: {e}")
+        return []
+
+def discover_databases(repo, branch):
+    try:
+        # Look for database configuration files
+        database_configs = []
+        database_patterns = [
+            'database.yml', 'database.json', 
+            'db.json', 'db.yml', 
+            'config/database.py', 
+            'prisma/schema.prisma',
+            'migrations/'
+        ]
+        
+        for pattern in database_patterns:
+            try:
+                db_files = repo.get_contents(pattern, ref=branch)
+                for db_file in db_files:
+                    database_configs.append({
+                        'name': db_file.name,
+                        'type': 'Database Configuration',
+                        'path': db_file.path
+                    })
+            except Exception:
+                pass
+        
+        return database_configs
+    except Exception as e:
+        logger.error(f"Error in discover_databases: {e}")
+        return []
+
+def discover_cloud_projects(repo, branch):
+    try:
+        # Look for cloud provider configuration files
+        cloud_configs = []
+        cloud_patterns = [
+            # Terraform
+            '*.tf', 
+            # AWS CloudFormation
+            '*.yaml', '*.yml', 
+            # Azure Resource Manager
+            '*.json',
+            # Kubernetes
+            'k8s/', 'kubernetes/', 
+            # Serverless Framework
+            'serverless.yml'
+        ]
+        
+        for pattern in cloud_patterns:
+            try:
+                cloud_files = repo.get_contents(pattern, ref=branch)
+                for cloud_file in cloud_files:
+                    cloud_configs.append({
+                        'name': cloud_file.name,
+                        'provider': infer_cloud_provider(cloud_file.name),
+                        'path': cloud_file.path
+                    })
+            except Exception:
+                pass
+        
+        return cloud_configs
+    except Exception as e:
+        logger.error(f"Error in discover_cloud_projects: {e}")
+        return []
+
+def infer_cloud_provider(filename):
+    providers_map = {
+        'aws': ['aws', 'amazon', 'cloudformation'],
+        'azure': ['azure', 'microsoft'],
+        'gcp': ['gcp', 'google', 'googlecloud'],
+        'terraform': ['terraform', 'tf'],
+        'kubernetes': ['k8s', 'kubernetes']
+    }
+    
+    filename_lower = filename.lower()
+    
+    for provider, keywords in providers_map.items():
+        if any(keyword in filename_lower for keyword in keywords):
+            return provider
+    
+    return 'Unknown'
+
 # Server Configuration
 if __name__ == '__main__':
     free_port = find_free_port()

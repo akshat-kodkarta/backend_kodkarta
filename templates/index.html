@@ -3,311 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Repository Explorer</title>
+    <title>Kodkarta</title>
     
     <!-- Bootstrap CSS -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-    
-    <!-- Custom CSS -->
     <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
-<body class="bg-gradient">
-    <div class="app-container">
-        <div class="container-fluid py-4 px-md-5">
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-10 col-xl-8">
-                    <!-- Header -->
-                    <header class="text-center mb-5 text-white">
-                        <h1 class="display-4 fw-bold mb-0">
-                            <i class="fab fa-github me-3"></i>GitHub Repository Explorer
-                        </h1>
-                        <p class="lead mt-2 text-white-50">Analyze and visualize GitHub repositories with ease</p>
-                    </header>
-                    
-                    <!-- Main Content -->
-                    <div class="row g-4">
-                        <!-- Input Card -->
-                        <div class="col-12 col-md-6">
-                            <div class="elegant-card h-100 shadow-lg">
-                                <div class="card-header text-center py-4">
-                                    <h3 class="mb-0 d-flex align-items-center justify-content-center">
-                                        <i class="fas fa-search me-3"></i>
-                                        <span>Repository Details</span>
-                                    </h3>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Kodkarta" class="logo">
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-box-archive"></i>
+                    <span>All Assets</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Connections</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="search-container">
+                    <input type="search" placeholder="Search for 'GitHub'" class="search-input">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-link">Need help?</button>
+                    <button class="btn-profile">AJ</button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Initial Connect State -->
+                <div id="connect-state" class="text-center py-5">
+                    <h2 class="mb-4">Connect Your GitHub Repository</h2>
+                    <div class="connect-github-container">
+                        <button class="btn btn-primary btn-lg" id="connectGithubBtn">
+                            Connect GitHub
+                        </button>
+                        <div class="github-dropdown" id="githubDropdown">
+                            <div class="dropdown-content">
+                                <div class="form-group mb-3">
+                                    <label for="repo-url">Repository URL</label>
+                                    <input type="text" class="form-control" id="repo-url" placeholder="https://github.com/owner/repo">
                                 </div>
-                                <div class="card-body">
-                                    <form id="repo-form" class="needs-validation" novalidate>
-                                        <div class="form-floating mb-4">
-                                            <input 
-                                                type="text" 
-                                                class="form-control" 
-                                                id="repo-url" 
-                                                placeholder="https://github.com/owner/repo"
-                                                required
-                                            >
-                                            <label for="repo-url">
-                                                <i class="fas fa-link me-2"></i>GitHub Repository URL
-                                            </label>
-                                            <div class="invalid-feedback">
-                                                Please enter a valid GitHub repository URL
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="form-floating mb-4">
-                                            <input 
-                                                type="password" 
-                                                class="form-control" 
-                                                id="github-token" 
-                                                placeholder="Enter GitHub Personal Access Token"
-                                                required
-                                            >
-                                            <label for="github-token">
-                                                <i class="fas fa-key me-2"></i>GitHub Personal Access Token
-                                            </label>
-                                            <div class="invalid-feedback">
-                                                GitHub token is required
-                                            </div>
-                                            <div class="form-text mt-2">
-                                                <i class="fas fa-info-circle me-1"></i> Your token is used securely and never stored
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="d-grid mt-4">
-                                            <button type="submit" class="btn btn-primary btn-lg">
-                                                <i class="fas fa-rocket me-2"></i>Explore Repository
-                                            </button>
-                                        </div>
-                                    </form>
+                                <div class="form-group mb-3">
+                                    <label for="access-token">Access Token</label>
+                                    <input type="password" class="form-control" id="access-token" placeholder="Enter your GitHub token">
                                 </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Results Card -->
-                        <div class="col-12 col-md-6">
-                            <div class="elegant-card h-100 shadow-lg">
-                                <div class="card-header text-center py-4">
-                                    <h3 class="mb-0 d-flex align-items-center justify-content-center">
-                                        <i class="fas fa-terminal me-3"></i>
-                                        <span>Results</span>
-                                    </h3>
-                                </div>
-                                <div class="card-body">
-                                    <div id="result-container" class="mb-4">
-                                        <div class="result-placeholder">
-                                            <i class="fas fa-code fa-3x mb-3 text-primary-light"></i>
-                                            <p>Repository data will appear here</p>
-                                        </div>
-                                        <pre id="result-output" class="d-none"></pre>
-                                    </div>
-                                    
-                                    <h5 class="activity-log-header">
-                                        <i class="fas fa-list-ul me-2"></i>Activity Log
-                                    </h5>
-                                    <div id="log-container">
-                                        <div id="log-output" class="text-start">
-                                            <div class="log-entry info">
-                                                <i class="fas fa-info-circle me-2"></i>
-                                                Ready to explore repositories
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="dropdown-actions">
+                                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                                    <button class="btn btn-primary" id="submitBtn">Connect</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Repository Explorer Card (hidden initially) -->
-                    <div id="repository-explorer" class="elegant-card shadow-lg mt-4 d-none">
-                        <div class="card-header text-center py-3">
-                            <h3 class="mb-0 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-project-diagram me-3"></i>
-                                <span>Repository Structure</span>
-                            </h3>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="explorer-panel d-flex">
-                                <div id="file-sidebar" class="file-sidebar">
-                                    <div id="branch-file-header" class="p-3 border-bottom">
-                                        <h6 class="m-0 d-flex align-items-center">
-                                            <i class="fas fa-code-branch me-2"></i>
-                                            <span id="current-branch-name">Select a Branch</span>
-                                        </h6>
-                                    </div>
-                                    <div id="file-list-container" class="file-list-container">
-                                        <ul id="file-list" class="list-unstyled p-2"></ul>
-                                    </div>
-                                </div>
-                                <div id="asset-map-container" class="map-container">
-                                    <div class="map-placeholder">
-                                        <i class="fas fa-sitemap fa-3x mb-3"></i>
-                                        <p>Repository visualization will appear here</p>
-                                    </div>
-                                </div>
+                </div>
+
+                <!-- Connected State (Initially Hidden) -->
+                <div id="connected-state" class="d-none">
+                    <div class="content-header">
+                        <h1>GitHub</h1>
+                        <p class="subtitle">Repository - <span id="repo-name">kodkarta</span></p>
+                    </div>
+
+                    <!-- Asset Map -->
+                    <div class="asset-map-container">
+                        <div id="asset-map"></div>
+                        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+                            <div class="spinner"></div>
+                            <p>Creating repository map...</p>
+                            <div class="progress mt-3" style="width: 80%; max-width: 300px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
                             </div>
+                        </div>
+                        <div class="map-controls">
+                            <button id="zoomIn" class="btn btn-sm btn-light">+</button>
+                            <button id="zoomOut" class="btn btn-sm btn-light">-</button>
+                            <button id="resetZoom" class="btn btn-sm btn-light">Reset</button>
+                            <select id="filter" class="form-select form-select-sm">
+                                <option value="all">All Assets</option>
+                                <option value="iac">Infrastructure as Code</option>
+                                <option value="dependency">Dependencies</option>
+                                <option value="secret">Secrets</option>
+                            </select>
                         </div>
                     </div>
                     
-                    <footer class="text-center text-white-50 mt-4 mb-3">
-                        <p class="mb-0">
-                            <i class="fas fa-code me-2"></i>GitHub Repository Explorer &copy; 2024
-                        </p>
-                    </footer>
                 </div>
             </div>
-        </div>
+        </main>
+        <!-- The bottom bar will be inserted here by JavaScript -->
     </div>
-
-    <!-- File Details Modal -->
-    <div id="details-modal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="fas fa-file-code me-2"></i>
-                        <span>File Details</span>
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Modal content will be dynamically inserted -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-    // Logging utility
-    const Logger = {
-        logOutput: document.getElementById('log-output'),
-        
-        log(message, type = 'info') {
-            const logEntry = document.createElement('div');
-            logEntry.classList.add('log-entry', type);
-            
-            // Create icon based on type
-            const icon = document.createElement('i');
-            icon.classList.add('fas', 'me-2');
-            
-            switch(type) {
-                case 'info':
-                    icon.classList.add('fa-info-circle');
-                    break;
-                case 'warning':
-                    icon.classList.add('fa-exclamation-triangle');
-                    break;
-                case 'error':
-                    icon.classList.add('fa-times-circle');
-                    break;
-                default:
-                    icon.classList.add('fa-info-circle');
-            }
-            
-            logEntry.appendChild(icon);
-            
-            // Add timestamp and message
-            const timestamp = new Date().toLocaleTimeString();
-            const textSpan = document.createElement('span');
-            textSpan.textContent = `[${timestamp}] ${message}`;
-            logEntry.appendChild(textSpan);
-            
-            this.logOutput.appendChild(logEntry);
-            
-            // Auto-scroll to bottom
-            this.logOutput.scrollTop = this.logOutput.scrollHeight;
-        },
-
-        clear() {
-            this.logOutput.innerHTML = '';
-        }
-    };
-
-    document.getElementById('repo-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const repoUrl = document.getElementById('repo-url').value;
-        const githubToken = document.getElementById('github-token').value;
-        const resultOutput = document.getElementById('result-output');
-        const resultPlaceholder = document.querySelector('.result-placeholder');
-
-        // Show loading state
-        resultPlaceholder.classList.add('d-none');
-        resultOutput.classList.remove('d-none');
-        resultOutput.textContent = 'Loading repository data...';
-        resultOutput.classList.add('loading');
-        
-        // Clear previous logs
-        Logger.clear();
-        
-        // Enhanced Detailed Logging
-        Logger.log(`Starting repository exploration`, 'info');
-        Logger.log(`Repository URL: ${repoUrl}`, 'info');
-        Logger.log(`Token Length: ${githubToken.length}`, 'info');
-
-        // Comprehensive Fetch with Detailed Error Handling
-        fetch('/explore_repository', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                repo_url: repoUrl,
-                github_token: githubToken
-            })
-        })
-        .then(response => {
-            // Detailed Response Logging
-            Logger.log(`Response received with status: ${response.status}`, 'info');
-            
-            // Comprehensive Response Handling
-            if (!response.ok) {
-                return response.text().then(errorText => {
-                    Logger.log(`Error response: ${errorText}`, 'error');
-                    throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Remove loading state
-            resultOutput.classList.remove('loading');
-            
-            // Successful Response Processing
-            Logger.log(`Repository exploration successful`, 'info');
-            resultOutput.textContent = JSON.stringify(data, null, 2);
-            
-            // Show the repository explorer panel
-            document.getElementById('repository-explorer').classList.remove('d-none');
-        })
-        .catch(error => {
-            // Remove loading state
-            resultOutput.classList.remove('loading');
-            
-            // Comprehensive Error Logging
-            Logger.log('Error occurred during exploration', 'error');
-            Logger.log(`${error.message}`, 'error');
-
-            // Network Error Specific Diagnostics
-            if (error instanceof TypeError) {
-                Logger.log('Network connection issue detected', 'warning');
-            }
-
-            resultOutput.textContent = `Error: ${error.message}`;
-        });
-    });
-    </script>
 
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/repository_explorer.js') }}"></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-kit-code.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
