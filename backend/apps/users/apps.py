@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class GithubAppConfig(AppConfig):
+class UsersConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "github_app"
+    name = "apps.users"
