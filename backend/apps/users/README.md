@@ -279,7 +279,35 @@ Content-Type: application/json
 }
 ```
 
-### 7. GitHub Login
+### 7. GitHub Authorization URL
+
+Get a GitHub authorization URL to start the OAuth flow.
+
+**URL**: `/api/users/github/auth/`  
+**Method**: `GET`  
+**Authentication**: None
+
+**Success Response** (200 OK):
+```json
+{
+  "status": "success",
+  "message": "GitHub authorization URL generated",
+  "data": {
+    "url": "https://github.com/login/oauth/authorize?client_id=your_client_id&redirect_uri=your_redirect_uri&scope=user:email&state=random_state_string",
+    "state": "random_state_string"
+  }
+}
+```
+
+**Error Response** (500 Internal Server Error):
+```json
+{
+  "status": "failed",
+  "message": "Failed to generate GitHub authorization URL."
+}
+```
+
+### 8. GitHub Login
 
 Authenticate or register a user using a GitHub authorization code.
 
@@ -295,7 +323,7 @@ Content-Type: application/json
 **Request Body**:
 ```json
 {
-  "code": "github_oauth_code_from_client"
+  "code": "github_oauth_code_from_callback"
 }
 ```
 
@@ -328,7 +356,21 @@ Content-Type: application/json
 }
 ```
 
-### 8. User Profile
+### 9. GitHub Callback Handler
+
+Handle the GitHub OAuth callback with code in URL parameters.
+
+**URL**: `/api/users/github/callback/`  
+**Method**: `GET`  
+**Authentication**: None
+
+**Query Parameters**:
+- `code`: The authorization code from GitHub
+- `state`: The state parameter for CSRF protection
+
+**Note**: This endpoint internally calls the GitHub Login endpoint and returns the same response format.
+
+### 10. User Profile
 
 Get the authenticated user's profile.
 
@@ -378,6 +420,39 @@ Common HTTP status codes returned by the API:
 - `404 Not Found`: Resource not found
 - `500 Internal Server Error`: Server-side error
 
+## GitHub OAuth Flow
+
+The GitHub OAuth authentication flow follows these steps:
+
+1. **Frontend Initiates Auth Flow**:
+   - Frontend calls `/api/users/github/auth/` to get an authorization URL
+   - Frontend stores the returned `state` parameter in localStorage for CSRF protection
+   - Frontend redirects the user to the returned GitHub authorization URL
+
+2. **User Authenticates with GitHub**:
+   - User logs in to GitHub and authorizes the application
+   - GitHub redirects back to the frontend's callback URL with an authorization `code` and the same `state` parameter
+
+3. **Frontend Handles Callback**:
+   - Frontend verifies that the `state` parameter matches what was stored in localStorage
+   - Frontend sends the `code` to `/api/users/login/github/`
+   - Backend exchanges the code for a GitHub access token
+   - Backend retrieves the user's information and email from GitHub
+   - Backend creates or authenticates the user and returns JWT tokens
+
+4. **Frontend Completes Authentication**:
+   - Frontend stores the JWT tokens
+   - Frontend redirects to the authenticated area
+
+### Setting Up GitHub OAuth
+
+1. Create a GitHub OAuth App at GitHub.com → Settings → Developer settings → OAuth Apps
+2. Set the callback URL to match your frontend's GitHub callback route
+3. Configure your backend with the following environment variables:
+   - `GITHUB_CLIENT_ID`: Your GitHub OAuth App's client ID
+   - `GITHUB_CLIENT_SECRET`: Your GitHub OAuth App's client secret
+   - `GITHUB_REDIRECT_URI`: Your frontend's callback URL (e.g., http://localhost:3000/auth/github/callback)
+
 ## Implementation Notes
 
 ### Social Authentication Flow
@@ -388,7 +463,8 @@ Common HTTP status codes returned by the API:
    - The server verifies the token with Google and authenticates the user
 
 2. **GitHub Authentication**:
-   - The client redirects to GitHub OAuth authorization page
+   - The client gets an authorization URL from `/api/users/github/auth/`
+   - The client redirects to GitHub's OAuth authorization page
    - GitHub redirects back to the client with an authorization code
    - The client sends this code to the `/api/users/login/github/` endpoint
    - The server exchanges the code for an access token and authenticates the user
@@ -401,6 +477,7 @@ Common HTTP status codes returned by the API:
 - Refresh tokens can be used to obtain new access tokens
 - Refresh tokens are blacklisted on logout to prevent reuse
 - Passwords are securely hashed using Django's password hashing system
+- GitHub OAuth flow includes state parameter validation for CSRF protection
 
 '
 

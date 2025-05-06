@@ -12,6 +12,9 @@ from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 import requests
 import json
 import logging
+import os
+from django.conf import settings
+import urllib.parse
 
 from ..models.models import User
 from ..serializers import (
@@ -48,6 +51,9 @@ class UserRegistrationView(APIView):
 
     def post(self, request):
         try:
+            # Log the request body to diagnose validation issues
+            logger.debug(f"UserRegistrationView received data: {request.data}")
+            
             serializer = UserRegistrationSerializer(data=request.data)
             if serializer.is_valid():
                 user = serializer.save()
@@ -70,6 +76,7 @@ class UserRegistrationView(APIView):
             elif 'confirm_password' in serializer.errors:
                 error_message = "Passwords do not match."
             
+            logger.error(f"UserRegistrationView serializer errors: {serializer.errors}")
             return Response({
                 "status": "failed", 
                 "message": error_message,
@@ -90,16 +97,21 @@ class EmailLoginView(APIView):
     
     def post(self, request):
         try:
+            # Log the request body to diagnose validation issues
+            logger.debug(f"EmailLoginView received data: {request.data}")
+            
             email = request.data.get('email', '')
             password = request.data.get('password', '')
             
             if not email:
+                logger.error("EmailLoginView error: Email is required")
                 return Response({
                     "status": "failed",
                     "message": "Email is required."
                 }, status=status.HTTP_400_BAD_REQUEST)
             
             if not password:
+                logger.error("EmailLoginView error: Password is required")
                 return Response({
                     "status": "failed",
                     "message": "Password is required."
@@ -144,66 +156,172 @@ class GoogleLoginView(APIView):
     
     def post(self, request):
         try:
+            # Log the request body to diagnose validation issues
+            logger.debug(f"GoogleLoginView received data: {request.data}")
+            
             serializer = GoogleAuthSerializer(data=request.data)
             if not serializer.is_valid():
+                logger.error(f"GoogleLoginView serializer errors: {serializer.errors}")
                 return Response({
                     "status": "failed",
                     "message": "Invalid request. Token is required."
                 }, status=status.HTTP_400_BAD_REQUEST)
             
             token = serializer.validated_data['token']
+            is_auth_code = serializer.validated_data.get('is_auth_code', False)
             
-            # Verify the Google token with Google's API
-            try:
-                response = requests.get(
-                    f'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={token}'
-                )
-                
-                if response.status_code != 200:
+            if is_auth_code:
+                # Handle authorization code flow
+                try:
+                    logger.debug(f"GoogleLoginView processing authorization code")
+                    
+                    # Log the entire request data to see what's being received
+                    logger.debug(f"GoogleLoginView request data: {request.data}")
+                    
+                    # Exchange authorization code for tokens
+                    client_id = os.environ.get('NEXT_PUBLIC_GOOGLE_CLIENT_ID')
+                    client_secret = os.environ.get('GOOGLE_CLIENT_SECRET')
+                    
+                    # First try to get redirect_uri from request data (sent by frontend)
+                    # Fall back to environment variable if not in request
+                    redirect_uri = request.data.get('redirect_uri') or os.environ.get('NEXT_PUBLIC_GOOGLE_REDIRECT_URI')
+                    
+                    if not client_id or not client_secret:
+                        logger.error(f"Google client credentials missing. Client ID: {'Set' if client_id else 'Missing'}, Client Secret: {'Set' if client_secret else 'Missing'}")
+                        return Response({
+                            "status": "failed",
+                            "message": "Google authentication is not properly configured on the server."
+                        }, status=status.HTTP_501_NOT_IMPLEMENTED)
+                    
+                    if not redirect_uri:
+                        logger.error("GoogleLoginView: Redirect URI is missing from both request and environment variables")
+                        return Response({
+                            "status": "failed",
+                            "message": "Google redirect URI is missing. Please check your configuration."
+                        }, status=status.HTTP_400_BAD_REQUEST)
+                    
+                    logger.debug(f"GoogleLoginView using redirect_uri: {redirect_uri}")
+                    
+                    token_url = 'https://oauth2.googleapis.com/token'
+                    payload = {
+                        'code': token,
+                        'client_id': client_id,
+                        'client_secret': client_secret,
+                        'redirect_uri': redirect_uri,
+                        'grant_type': 'authorization_code'
+                    }
+                    
+                    logger.debug(f"GoogleLoginView token exchange payload: {payload}")
+                    
+                    response = requests.post(token_url, data=payload)
+                    
+                    if response.status_code != 200:
+                        logger.error(f"GoogleLoginView code exchange failed: {response.text}")
+                        return Response({
+                            "status": "failed",
+                            "message": "Failed to exchange authorization code. Please try again."
+                        }, status=status.HTTP_400_BAD_REQUEST)
+                    
+                    token_data = response.json()
+                    id_token = token_data.get('id_token')
+                    
+                    if not id_token:
+                        logger.error("GoogleLoginView: No ID token received from code exchange")
+                        return Response({
+                            "status": "failed",
+                            "message": "Failed to authenticate with Google. No ID token received."
+                        }, status=status.HTTP_400_BAD_REQUEST)
+                    
+                    # Now verify the ID token
+                    response = requests.get(
+                        f'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={id_token}'
+                    )
+                    
+                except requests.exceptions.RequestException as e:
+                    logger.error(f"Google API error during code exchange: {str(e)}")
                     return Response({
                         "status": "failed",
-                        "message": "Invalid Google token. Please try again."
-                    }, status=status.HTTP_400_BAD_REQUEST)
-                
-                google_data = response.json()
-                email = google_data.get('email')
-                
-                if not email:
+                        "message": "Could not connect to Google authentication service. Please try again later."
+                    }, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            else:
+                # Original ID token flow
+                try:
+                    logger.debug(f"GoogleLoginView verifying ID token with Google API: {token[:10]}...")
+                    response = requests.get(
+                        f'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={token}'
+                    )
+                except requests.exceptions.RequestException as e:
+                    logger.error(f"Google API error: {str(e)}")
                     return Response({
                         "status": "failed",
-                        "message": "Email not found in Google data. Please ensure your Google account has an email."
-                    }, status=status.HTTP_400_BAD_REQUEST)
-                
-            except requests.exceptions.RequestException as e:
-                logger.error(f"Google API error: {str(e)}")
+                        "message": "Could not connect to Google authentication service. Please try again later."
+                    }, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            
+            logger.debug(f"GoogleLoginView Google API response status: {response.status_code}")
+            
+            if response.status_code != 200:
+                logger.error(f"GoogleLoginView token validation failed: {response.text}")
                 return Response({
                     "status": "failed",
-                    "message": "Could not connect to Google authentication service. Please try again later."
-                }, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+                    "message": "Invalid Google token. Please try again."
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            google_data = response.json()
+            logger.debug(f"GoogleLoginView successful Google API response: {google_data}")
+            
+            email = google_data.get('email')
+            
+            if not email:
+                logger.error("GoogleLoginView: Email not found in Google data")
+                return Response({
+                    "status": "failed",
+                    "message": "Email not found in Google data. Please ensure your Google account has an email."
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            # For authorization code flow, we verify against the original client_id
+            if is_auth_code:
+                expected_client_id = os.environ.get('NEXT_PUBLIC_GOOGLE_CLIENT_ID')
+            else:
+                expected_client_id = os.environ.get('NEXT_PUBLIC_GOOGLE_CLIENT_ID')
+                
+            if google_data.get('aud') != expected_client_id:
+                logger.error(f"Token validation failed: audience mismatch - expected {expected_client_id}, got {google_data.get('aud')}")
+                return Response({
+                    "status": "failed", 
+                    "message": "Invalid client ID"
+                }, status=status.HTTP_400_BAD_REQUEST)
             
             # Check if user exists
             try:
                 user = User.objects.get(email=email)
-                # Update Google ID if not set
-                if not user.auth_provider == 'google':
-                    return Response({
-                        "status": "failed",
-                        "message": f"This email is already registered with {user.auth_provider}. Please use that login method."
-                    }, status=status.HTTP_400_BAD_REQUEST)
                 
-                if not user.auth_id:
+                logger.debug(f"GoogleLoginView: Found existing user with email {email}, auth_provider={user.auth_provider}, auth_id={'Set' if user.auth_id else 'None'}")
+                
+                # Always update to Google auth if not already
+                if not user.auth_provider or user.auth_provider not in ['google']:
+                    logger.info(f"GoogleLoginView: Updating user {email} auth provider to Google from {user.auth_provider}")
+                    user.auth_provider = 'google'
+                    user.auth_id = google_data.get('sub')
+                    user.save()
+                # Update auth_id if it doesn't match or is missing
+                elif user.auth_provider == 'google' and (not user.auth_id or user.auth_id != google_data.get('sub')):
+                    logger.info(f"GoogleLoginView: Updating Google auth_id for user {email}")
                     user.auth_id = google_data.get('sub')
                     user.save()
                 
                 if not user.is_active:
+                    logger.warning(f"GoogleLoginView: Deactivated account attempt for {email}")
                     return Response({
                         "status": "failed",
                         "message": "This account has been deactivated."
                     }, status=status.HTTP_401_UNAUTHORIZED)
                 
+                logger.info(f"GoogleLoginView: User {email} authentication successful")
+                
             except User.DoesNotExist:
                 # Create new user
                 try:
+                    logger.info(f"GoogleLoginView: Creating new user with email {email}")
                     user = User.objects.create_user(
                         email=email,
                         auth_id=google_data.get('sub'),
@@ -220,6 +338,7 @@ class GoogleLoginView(APIView):
                     }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             
             tokens = get_tokens_for_user(user)
+            logger.info(f"GoogleLoginView: Successful login for {email}")
             return Response({
                 "status": "success",
                 "message": "Google login successful",
@@ -237,14 +356,74 @@ class GoogleLoginView(APIView):
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+class GitHubAuthorizationView(APIView):
+    """
+    View to generate the GitHub authorization URL
+    """
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    
+    def get(self, request):
+        try:
+            # Get GitHub OAuth settings
+            client_id = os.environ.get('GITHUB_CLIENT_ID')
+            redirect_uri = os.environ.get('GITHUB_REDIRECT_URI')
+            scopes = getattr(settings, 'GITHUB_SCOPES', ['user:email'])
+            
+            logger.debug(f"GitHubAuthorizationView: Using client_id: {'Set' if client_id else 'Missing'}, redirect_uri: {redirect_uri}")
+            
+            if not client_id:
+                logger.error("GitHubAuthorizationView: Missing GITHUB_CLIENT_ID environment variable")
+                return Response({
+                    "status": "failed",
+                    "message": "GitHub authentication is not properly configured on the server."
+                }, status=status.HTTP_501_NOT_IMPLEMENTED)
+            
+            # Generate state parameter to prevent CSRF
+            state = os.urandom(16).hex()
+            
+            # Build the authorization URL
+            auth_url = 'https://github.com/login/oauth/authorize'
+            params = {
+                'client_id': client_id,
+                'redirect_uri': redirect_uri,
+                'scope': ' '.join(scopes),
+                'state': state,
+            }
+            
+            url = f"{auth_url}?{urllib.parse.urlencode(params)}"
+            
+            logger.debug(f"GitHubAuthorizationView: Generated URL: {url}")
+            
+            return Response({
+                "status": "success",
+                "message": "GitHub authorization URL generated",
+                "data": {
+                    "url": url,
+                    "state": state
+                }
+            })
+            
+        except Exception as e:
+            logger.error(f"Error generating GitHub auth URL: {str(e)}")
+            return Response({
+                "status": "failed",
+                "message": "Failed to generate GitHub authorization URL."
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 class GithubLoginView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
     
     def post(self, request):
         try:
+            # Log the request body to diagnose validation issues
+            logger.debug(f"GithubLoginView received data: {request.data}")
+            
             serializer = GithubAuthSerializer(data=request.data)
             if not serializer.is_valid():
+                logger.error(f"GithubLoginView serializer errors: {serializer.errors}")
                 return Response({
                     "status": "failed",
                     "message": "Invalid request. Authorization code is required."
@@ -252,12 +431,16 @@ class GithubLoginView(APIView):
             
             code = serializer.validated_data['code']
             
-            # Exchange code for token
-            # You'll need to register your app with GitHub and get client_id and client_secret
-            client_id = 'YOUR_GITHUB_CLIENT_ID'
-            client_secret = 'YOUR_GITHUB_CLIENT_SECRET'
+            # Get GitHub OAuth credentials from environment variables
+            client_id = os.environ.get('GITHUB_CLIENT_ID')
+            client_secret = os.environ.get('GITHUB_CLIENT_SECRET')
+            redirect_uri = os.environ.get('GITHUB_REDIRECT_URI')
             
-            if not client_id or not client_secret or client_id == 'YOUR_GITHUB_CLIENT_ID':
+            # Log the GitHub OAuth configuration 
+            logger.debug(f"GithubLoginView OAuth config: client_id={'Set' if client_id else 'Missing'}, client_secret={'Set' if client_secret else 'Missing'}, redirect_uri={redirect_uri}")
+            
+            if not client_id or not client_secret:
+                logger.error(f"GitHub authentication misconfigured. Client ID: {'Set' if client_id else 'Missing'}, Client Secret: {'Set' if client_secret else 'Missing'}")
                 return Response({
                     "status": "failed",
                     "message": "GitHub authentication is not properly configured on the server."
@@ -267,9 +450,14 @@ class GithubLoginView(APIView):
                 'client_id': client_id,
                 'client_secret': client_secret,
                 'code': code,
+                'redirect_uri': redirect_uri
             }
             
+            logger.debug(f"GitHub token exchange payload: {data}")
+            
             try:
+                # Exchange the code for an access token
+                logger.info(f"GithubLoginView: Exchanging authorization code for access token")
                 response = requests.post(
                     'https://github.com/login/oauth/access_token',
                     data=data,
@@ -277,16 +465,20 @@ class GithubLoginView(APIView):
                 )
                 
                 if response.status_code != 200:
+                    logger.error(f"GitHub token error: {response.text}")
                     return Response({
                         "status": "failed",
                         "message": "Failed to obtain access token from GitHub. Please try again."
                     }, status=status.HTTP_400_BAD_REQUEST)
                 
                 token_data = response.json()
+                
                 if 'error' in token_data:
+                    error_msg = token_data.get('error_description', token_data['error'])
+                    logger.error(f"GitHub OAuth error: {error_msg}")
                     return Response({
                         "status": "failed",
-                        "message": f"GitHub error: {token_data.get('error_description', token_data['error'])}"
+                        "message": f"GitHub error: {error_msg}"
                     }, status=status.HTTP_400_BAD_REQUEST)
                 
                 access_token = token_data.get('access_token')
@@ -306,12 +498,14 @@ class GithubLoginView(APIView):
                 )
                 
                 if response.status_code != 200:
+                    logger.error(f"GitHub API error: {response.text}")
                     return Response({
                         "status": "failed",
                         "message": "Failed to get user info from GitHub. Please try again."
                     }, status=status.HTTP_400_BAD_REQUEST)
                 
                 github_data = response.json()
+                logger.info(f"GitHub user data: {github_data}")
                 
                 # Get user's email (GitHub may not provide email in user data)
                 email_response = requests.get(
@@ -323,12 +517,15 @@ class GithubLoginView(APIView):
                 )
                 
                 if email_response.status_code != 200:
+                    logger.error(f"GitHub email API error: {email_response.text}")
                     return Response({
                         "status": "failed",
                         "message": "Failed to get email from GitHub. Please ensure your GitHub account has a verified email."
                     }, status=status.HTTP_400_BAD_REQUEST)
                 
                 emails = email_response.json()
+                logger.info(f"GitHub emails: {emails}")
+                
                 if not emails or len(emails) == 0:
                     return Response({
                         "status": "failed",
@@ -357,23 +554,28 @@ class GithubLoginView(APIView):
             try:
                 user = User.objects.get(email=primary_email)
                 
-                # Check auth provider
-                if user.auth_provider != 'github':
-                    return Response({
-                        "status": "failed",
-                        "message": f"This email is already registered with {user.auth_provider}. Please use that login method."
-                    }, status=status.HTTP_400_BAD_REQUEST)
+                logger.debug(f"GithubLoginView: Found existing user with email {primary_email}, auth_provider={user.auth_provider}, auth_id={'Set' if user.auth_id else 'None'}")
                 
-                # Update GitHub ID if not set
-                if not user.auth_id:
+                # Always update to GitHub auth if not already
+                if not user.auth_provider or user.auth_provider not in ['github']:
+                    logger.info(f"GithubLoginView: Updating user {primary_email} auth provider to GitHub from {user.auth_provider}")
+                    user.auth_provider = 'github'
+                    user.auth_id = str(github_data.get('id'))
+                    user.save()
+                # Update auth_id if it doesn't match or is missing
+                elif user.auth_provider == 'github' and (not user.auth_id or user.auth_id != str(github_data.get('id'))):
+                    logger.info(f"GithubLoginView: Updating GitHub auth_id for user {primary_email}")
                     user.auth_id = str(github_data.get('id'))
                     user.save()
                 
                 if not user.is_active:
+                    logger.warning(f"GithubLoginView: Deactivated account attempt for {primary_email}")
                     return Response({
                         "status": "failed",
                         "message": "This account has been deactivated."
                     }, status=status.HTTP_401_UNAUTHORIZED)
+                
+                logger.info(f"GithubLoginView: User {primary_email} authentication successful")
                 
             except User.DoesNotExist:
                 # Create new user
@@ -469,3 +671,29 @@ class LogoutView(APIView):
                 "status": "failed",
                 "message": "An error occurred during logout"
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class GitHubOAuthCallbackView(APIView):
+    """
+    A dedicated view to handle GitHub OAuth redirect
+    This is useful for frontend integration to simplify the flow
+    """
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    
+    def get(self, request):
+        # Extract the code from the query parameters
+        code = request.GET.get('code')
+        
+        if not code:
+            return Response({
+                "status": "failed",
+                "message": "No authorization code provided"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Create a mock request for the GithubLoginView
+        mock_request = type('MockRequest', (), {'data': {'code': code}})()
+        
+        # Forward to the existing GitHub login view
+        github_view = GithubLoginView()
+        return github_view.post(mock_request)
