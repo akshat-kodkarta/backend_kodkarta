@@ -10,11 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
+import sys
 from pathlib import Path
+from dotenv import load_dotenv
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+ENV_FILE = os.path.join(os.path.dirname(BASE_DIR), '.env')
+load_dotenv(ENV_FILE)
 
 
 # Quick-start development settings - unsuitable for production
@@ -173,3 +180,24 @@ SIMPLE_JWT = {
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True  # Development only, set specific origins in production
 CORS_ALLOW_CREDENTIALS = True
+
+
+import os
+
+# GitHub OAuth credentials
+# These can be overridden by environment variables
+GITHUB_CLIENT_ID = os.environ.get('GITHUB_CLIENT_ID', '')
+GITHUB_CLIENT_SECRET = os.environ.get('GITHUB_CLIENT_SECRET', '')
+
+# The redirect URI must match what you've configured in your GitHub OAuth app
+# This is the URI where GitHub will redirect the user after authentication
+GITHUB_REDIRECT_URI = os.environ.get('GITHUB_REDIRECT_URI', 'http://localhost:3000/auth/github/callback')
+# GitHub OAuth URLs (shouldn't need to change these)
+GITHUB_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
+GITHUB_TOKEN_URL = 'https://github.com/login/oauth/access_token'
+GITHUB_API_URL = 'https://api.github.com'
+
+# Scopes to request from GitHub
+# user:email is required to fetch user's email address
+GITHUB_SCOPES = ['user:email'] 
+

@@ -39,6 +39,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 class GoogleAuthSerializer(serializers.Serializer):
     token = serializers.CharField(required=True)
+    is_auth_code = serializers.BooleanField(required=False, default=False)
+    redirect_uri = serializers.CharField(required=False)
+    client_id = serializers.CharField(required=False)
 
 
 class GithubAuthSerializer(serializers.Serializer):

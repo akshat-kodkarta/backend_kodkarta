@@ -10,7 +10,9 @@ from .views.views import (
     GithubLoginView,
     UserProfileView,
     LogoutView,
-    EmailLoginView
+    EmailLoginView,
+    GitHubOAuthCallbackView,
+    GitHubAuthorizationView
 )
 
 urlpatterns = [
@@ -26,6 +28,8 @@ urlpatterns = [
     # Social auth
     path('login/google/', GoogleLoginView.as_view(), name='google_login'),
     path('login/github/', GithubLoginView.as_view(), name='github_login'),
+    path('github/auth/', GitHubAuthorizationView.as_view(), name='github_auth'),
+    path('github/callback/', GitHubOAuthCallbackView.as_view(), name='github_callback'),
     
     # User profile
     path('profile/', UserProfileView.as_view(), name='user_profile'),
