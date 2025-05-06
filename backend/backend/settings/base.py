@@ -53,9 +53,10 @@ INSTALLED_APPS = [
     "apps.products",
     "apps.integrations",
     "apps.assets",
+    "apps.analytics",
     "apps.policies",
     "apps.insights",
-    "apps.visualization",
+    "apps.visualization",   
 ]
 
 MIDDLEWARE = [
