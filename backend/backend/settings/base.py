@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 import sys
 from pathlib import Path
-from dotenv import load_dotenv
 from datetime import timedelta
+from dotenv import load_dotenv, dotenv_values
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,6 +22,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Load environment variables from .env file
 ENV_FILE = os.path.join(os.path.dirname(BASE_DIR), '.env')
 load_dotenv(ENV_FILE)
+dotenv_path = os.path.join(BASE_DIR, '.env')
+
+load_dotenv(dotenv_path)
+
+
+sys.path.insert(0, str(BASE_DIR))
+
+
+# Explicitly specify path
+# dotenv_path = os.path.join(BASE_DIR, '.env')
+# load_dotenv(dotenv_path)
+# Load values directly
+config = dotenv_values(".env")
 
 
 # Quick-start development settings - unsuitable for production
@@ -53,10 +66,10 @@ INSTALLED_APPS = [
     "apps.products",
     "apps.integrations",
     "apps.assets",
-    "apps.analytics",
     "apps.policies",
     "apps.insights",
-    "apps.visualization",   
+    "apps.visualization",
+    "apps.cloud_app",
 ]
 
 MIDDLEWARE = [
@@ -96,8 +109,15 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config['SUPABASE_DB'],
+        'USER': config['SUPABASE_USER'],
+        'PASSWORD': config['SUPABASE_PASSWORD'],
+        'HOST': config['SUPABASE_HOST'],    
+        'PORT': config['SUPABASE_PORT'],
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
 

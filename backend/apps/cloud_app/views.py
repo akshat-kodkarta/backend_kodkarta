@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from cloud_app.models import Organisation
+from apps.cloud_app.models import Organisation
 from django.http import JsonResponse
 
 def organisation_list(requests):

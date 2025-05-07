@@ -11,7 +11,9 @@ class Organisation(models.Model):
     updated_at = models.DateTimeField(auto_now=True)      
 
     class Meta:
-        db_table = 'Organisations'  
+        db_table = 'Organisations'
+        verbose_name = 'Cloud Organisation'
+        verbose_name_plural = 'Cloud Organisations'
 
     def __str__(self):
         return self.organisation_name

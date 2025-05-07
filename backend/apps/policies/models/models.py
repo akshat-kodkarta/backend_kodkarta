@@ -45,12 +45,14 @@ class SecurityPolicy(models.Model):
         return f"{self.name} ({self.policy_type})"
     
     class Meta:
+        db_table = 'security_policy'
         verbose_name_plural = "Security policies"
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['organization', 'policy_type']),
             models.Index(fields=['is_active'])
         ]
+        verbose_name = 'Security Policy'
 
 class PolicyRule(models.Model):
     """
@@ -94,11 +96,14 @@ class PolicyRule(models.Model):
         return f"{self.policy.name} - {self.name}"
     
     class Meta:
+        db_table = 'policy_rule'
         ordering = ['policy', '-severity']
         indexes = [
             models.Index(fields=['policy', 'rule_type']),
             models.Index(fields=['target_component_type'])
         ]
+        verbose_name = 'Policy Rule'
+        verbose_name_plural = 'Policy Rules'
 
 class ScanJob(models.Model):
     """
@@ -143,11 +148,14 @@ class ScanJob(models.Model):
         return f"{self.name} ({self.scan_type}, {self.status})"
     
     class Meta:
+        db_table = 'scan_job'
         ordering = ['-started_at']
         indexes = [
             models.Index(fields=['data_source', 'status']),
             models.Index(fields=['scan_type'])
         ]
+        verbose_name = 'Scan Job'
+        verbose_name_plural = 'Scan Jobs'
 
 class ComplianceResult(models.Model):
     """
@@ -194,9 +202,12 @@ class ComplianceResult(models.Model):
         return f"{self.component.name} - {self.policy.name}: {self.status}"
     
     class Meta:
+        db_table = 'compliance_result'
         ordering = ['-severity', '-checked_at']
         indexes = [
             models.Index(fields=['component', 'status']),
             models.Index(fields=['policy']),
             models.Index(fields=['scan_job'])
-        ] 
+        ]
+        verbose_name = 'Compliance Result'
+        verbose_name_plural = 'Compliance Results' 

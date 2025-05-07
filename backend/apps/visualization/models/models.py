@@ -48,12 +48,15 @@ class Graph(models.Model):
         return f"{self.name} ({self.graph_type})"
     
     class Meta:
+        db_table = 'graph'
         ordering = ['-updated_at']
         indexes = [
             models.Index(fields=['organization', 'graph_type']),
             models.Index(fields=['product']),
             models.Index(fields=['created_by'])
         ]
+        verbose_name = 'Graph'
+        verbose_name_plural = 'Graphs'
 
 class GraphNode(models.Model):
     """
@@ -103,12 +106,15 @@ class GraphNode(models.Model):
         return f"{self.name} ({self.node_type})"
     
     class Meta:
+        db_table = 'graph_node'
         ordering = ['graph', 'name']
         indexes = [
             models.Index(fields=['graph', 'node_type']),
             models.Index(fields=['component']),
             models.Index(fields=['status'])
         ]
+        verbose_name = 'Graph Node'
+        verbose_name_plural = 'Graph Nodes'
 
 class GraphEdge(models.Model):
     """
@@ -151,12 +157,15 @@ class GraphEdge(models.Model):
         return f"{self.source.name} → {self.target.name} ({self.edge_type})"
     
     class Meta:
+        db_table = 'graph_edge'
         ordering = ['graph', 'source']
         indexes = [
             models.Index(fields=['graph', 'edge_type']),
             models.Index(fields=['source', 'target']),
             models.Index(fields=['security_status'])
         ]
+        verbose_name = 'Graph Edge'
+        verbose_name_plural = 'Graph Edges'
 
 class Dashboard(models.Model):
     """
@@ -190,12 +199,15 @@ class Dashboard(models.Model):
         return f"{self.name} ({self.dashboard_type})"
     
     class Meta:
+        db_table = 'visualization_dashboard'
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['organization', 'dashboard_type']),
             models.Index(fields=['owner']),
             models.Index(fields=['is_default'])
         ]
+        verbose_name = 'Dashboard'
+        verbose_name_plural = 'Dashboards'
 
 class SecurityVisualization(models.Model):
     """
@@ -229,8 +241,11 @@ class SecurityVisualization(models.Model):
         return f"{self.name} ({self.visualization_type})"
     
     class Meta:
+        db_table = 'security_visualization'
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['organization', 'visualization_type']),
             models.Index(fields=['created_by'])
-        ] 
+        ]
+        verbose_name = 'Security Visualization'
+        verbose_name_plural = 'Security Visualizations' 

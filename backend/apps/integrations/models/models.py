@@ -50,11 +50,14 @@ class DataSource(models.Model):
         return f"{self.name} ({self.type})"
     
     class Meta:
+        db_table = 'data_source'
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['organization', 'type']),
             models.Index(fields=['connection_status'])
         ]
+        verbose_name = 'Data Source'
+        verbose_name_plural = 'Data Sources'
 
 class CloudResource(models.Model):
     """
@@ -91,11 +94,14 @@ class CloudResource(models.Model):
         return f"{self.name} ({self.specific_type})"
     
     class Meta:
+        db_table = 'cloud_resource'
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['data_source', 'type']),
             models.Index(fields=['resource_id'])
         ]
+        verbose_name = 'Cloud Resource'
+        verbose_name_plural = 'Cloud Resources'
 
 class GitRepository(models.Model):
     """
@@ -130,10 +136,12 @@ class GitRepository(models.Model):
         return self.full_name
     
     class Meta:
+        db_table = 'git_repository'
         verbose_name_plural = "Git repositories"
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['data_source', 'provider']),
             models.Index(fields=['full_name'])
         ]
+        verbose_name = 'Git Repository'
 

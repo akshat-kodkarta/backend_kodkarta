@@ -52,9 +52,12 @@ class ProductCatalog(models.Model):
         return f"{self.name} ({self.type})"
     
     class Meta:
+        db_table = 'products_catalog'
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['organization', 'type']),
             models.Index(fields=['name'])
         ]
+        verbose_name = 'Product Catalog'
+        verbose_name_plural = 'Product Catalogs'
 

@@ -50,11 +50,14 @@ class SoftwareComponent(models.Model):
         return f"{self.name} ({self.type})"
     
     class Meta:
+        db_table = 'software_component'
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['data_source', 'type']),
             models.Index(fields=['repository', 'path'])
         ]
+        verbose_name = 'Software Component'
+        verbose_name_plural = 'Software Components'
 
 class ProductComponent(models.Model):
     """
@@ -84,11 +87,14 @@ class ProductComponent(models.Model):
         return f"{self.product.name} - {self.component.name} ({self.relationship_type})"
     
     class Meta:
+        db_table = 'product_component'
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['product', 'relationship_type']),
             models.Index(fields=['component'])
         ]
+        verbose_name = 'Product Component'
+        verbose_name_plural = 'Product Components'
 
 class Dependency(models.Model):
     """
@@ -128,10 +134,12 @@ class Dependency(models.Model):
         return f"{self.source_component.name} → {self.target_component.name} ({self.dependency_type})"
     
     class Meta:
+        db_table = 'assets_dependency'
         verbose_name_plural = "Dependencies"
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['source_component']),
             models.Index(fields=['target_component']),
             models.Index(fields=['dependency_type'])
-        ] 
+        ]
+        verbose_name = 'Dependency' 

@@ -1,5 +1,5 @@
 from django.urls import path, include
-from cloud_app.views import organisation_list, organisation_detail
+from apps.cloud_app.views import organisation_list, organisation_detail
 
 urlpatterns = [
     

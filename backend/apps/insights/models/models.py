@@ -65,12 +65,15 @@ class Insight(models.Model):
         return f"{self.title} ({self.type}, {self.severity})"
     
     class Meta:
+        db_table = 'insight'
         ordering = ['-severity', '-created_at']
         indexes = [
             models.Index(fields=['organization', 'type']),
             models.Index(fields=['product', 'status']),
             models.Index(fields=['component'])
         ]
+        verbose_name = 'Insight'
+        verbose_name_plural = 'Insights'
 
 class AnomalyDetection(models.Model):
     """
@@ -123,12 +126,15 @@ class AnomalyDetection(models.Model):
         return f"{self.name} in {self.component.name if self.component else 'unknown'} ({self.anomaly_type})"
     
     class Meta:
+        db_table = 'anomaly_detection'
         ordering = ['-severity', '-detected_at']
         indexes = [
             models.Index(fields=['component', 'anomaly_type']),
             models.Index(fields=['product', 'severity']),
             models.Index(fields=['detected_at'])
         ]
+        verbose_name = 'Anomaly Detection'
+        verbose_name_plural = 'Anomaly Detections'
 
 class AIResponse(models.Model):
     """
@@ -165,12 +171,15 @@ class AIResponse(models.Model):
         return f"Response to: {self.query[:50]}..."
     
     class Meta:
+        db_table = 'ai_response'
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['user', 'created_at']),
             models.Index(fields=['organization']),
             models.Index(fields=['conversation_id'])
         ]
+        verbose_name = 'AI Response'
+        verbose_name_plural = 'AI Responses'
 
 class KnowledgeGraph(models.Model):
     """
@@ -205,8 +214,11 @@ class KnowledgeGraph(models.Model):
         return f"{self.name} ({self.graph_type})"
     
     class Meta:
+        db_table = 'knowledge_graph'
         ordering = ['-updated_at']
         indexes = [
             models.Index(fields=['organization', 'graph_type']),
             models.Index(fields=['product'])
-        ] 
+        ]
+        verbose_name = 'Knowledge Graph'
+        verbose_name_plural = 'Knowledge Graphs' 

@@ -67,6 +67,11 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'users_organization'
+        verbose_name = 'Organization'
+        verbose_name_plural = 'Organizations'
+
 class Role(models.Model):
     """
     User roles with associated permissions
@@ -77,6 +82,11 @@ class Role(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'users_role'
+        verbose_name = 'Role'
+        verbose_name_plural = 'Roles'
+
 class User(AbstractBaseUser, PermissionsMixin):
     AUTH_PROVIDER_CHOICES = [
         ("google", "Google"),
@@ -86,7 +96,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     # Basic user information
     email = models.EmailField(unique=True)
-    name = models.CharField(max_length=255, blank=True)
+    first_name = models.CharField(max_length=255, blank=True, null=True)
+    last_name = models.CharField(max_length=255, blank=True, null=True)
+    password = models.CharField(max_length=255, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -117,6 +129,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(null=True, blank=True)
     login_count = models.IntegerField(default=0)
     onboarding_completed = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
     
     date_joined = models.DateTimeField(default=timezone.now)
     
@@ -164,11 +177,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         return f"User(auth_id={self.auth_id!r}, email={self.email!r}, first_name={self.first_name!r}, last_name={self.last_name!r})"
 
     class Meta:
+        db_table = 'user'
         ordering = ['-date_joined']
         indexes = [
             models.Index(fields=['email']),
-            models.Index(fields=['organization', 'user_type']),
         ]
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
 
 class Token(models.Model):
     """
@@ -183,7 +198,7 @@ class Token(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"Token for {self.user.email}"
+        return self.key
     
     def save(self, *args, **kwargs):
         if not self.user:
@@ -261,6 +276,11 @@ class Token(models.Model):
             # print(f"DEBUG: new token created with expires: {new_token.expires}, refresh_expires: {new_token.refresh_expires}")
             return new_token, True
 
+    class Meta:
+        db_table = 'token'
+        verbose_name = 'Token'
+        verbose_name_plural = 'Tokens'
+
 class Team(models.Model):
     """
     Teams within organizations for B2B functionality.
@@ -280,10 +300,13 @@ class Team(models.Model):
         return f"{self.name} ({self.organization.name})"
     
     class Meta:
+        db_table = 'team'
         ordering = ['organization', 'name']
         indexes = [
             models.Index(fields=['organization']),
         ]
+        verbose_name = 'Team'
+        verbose_name_plural = 'Teams'
 
 
 class SubscriptionPlan(models.Model):
@@ -321,10 +344,13 @@ class SubscriptionPlan(models.Model):
         return f"{self.name} ({self.plan_type})"
     
     class Meta:
+        db_table = 'subscription_plan'
         ordering = ['plan_type', 'price']
         indexes = [
             models.Index(fields=['plan_type', 'is_active']),
         ]
+        verbose_name = 'Subscription Plan'
+        verbose_name_plural = 'Subscription Plans'
 
 
 class UserSubscription(models.Model):
@@ -361,12 +387,15 @@ class UserSubscription(models.Model):
         return f"{subscriber} - {self.plan.name}"
     
     class Meta:
+        db_table = 'user_subscription'
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['user']),
             models.Index(fields=['organization']),
             models.Index(fields=['status']),
         ]
+        verbose_name = 'User Subscription'
+        verbose_name_plural = 'User Subscriptions'
 
 
 class UserFeedback(models.Model):
@@ -398,5 +427,7 @@ class UserFeedback(models.Model):
         return f"{self.get_feedback_type_display()} from {self.user.email if self.user else 'Anonymous'}"
     
     class Meta:
+        db_table = 'user_feedback'
         ordering = ['-created_at']
         verbose_name_plural = "User feedback"
+        verbose_name = 'User Feedback'

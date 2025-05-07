@@ -302,3 +302,10 @@ No need for multiple VMs unless scaling or isolation is needed
 | `policies`      | Security/compliance policy definitions & rule evaluation logic          |
 | `insights`      | AI-generated insights, anomaly detection, summaries, and RAG responses  |
 | `visualization` | Asset graph generation, graph API, and frontend-related endpoints       |
+
+
+
+
+to remove all the migrations
+
+find kodkartaBE/backend/apps/*/migrations -name "*.py" ! -name "__init__.py" -delete
