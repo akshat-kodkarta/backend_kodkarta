@@ -16,8 +16,6 @@ django-admin==2.0.1
 django-cors-headers==4.3.1
 django-environ==0.10.0
 django-health-check==3.18.1
-django-mongodb-engine==0.6.0
-django-mongoengine==0.5.6
 django-redis==5.4.0
 django-rest-auth==0.9.5
 django-rest-framework-mongoengine==3.4.1
@@ -27,8 +25,6 @@ sqlparse==0.3.1  # Required specific version for djongo
 
 # MongoDB-related packages
 dnspython==2.4.2
-mongoengine==0.27.0
-pymongo==3.12.1  # Downgraded to be compatible with djongo
 
 # API documentation
 drf-spectacular==0.27.2
@@ -52,7 +48,7 @@ plotly==5.19.0
 folium==0.15.1
 
 # Server and deployment
-gunicorn==21.2.0
+gunicorn
 whitenoise==6.6.0
 redis==5.0.7
 
@@ -68,7 +64,3 @@ uvicorn
 
 # Database
 supabase
-groq
-
-prettytable  
-tabulate
