@@ -30,18 +30,19 @@ ROOT_URLCONF = os.getenv("ROOT_URLCONF", "mindPsy.urls")
 
 # Django Databases Configuration
 DATABASES = {
-    'default': {  # Postgres as primary database
+    "default": {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config['POSTGRES_DB'],
-        'USER': config['POSTGRES_USER'],
-        'PASSWORD': config['POSTGRES_PASSWORD'],
-        'HOST': config['POSTGRES_HOST'],
-        'PORT': config['POSTGRES_PORT'],
+        'NAME': config['SUPABASE_DB'],
+        'USER': config['SUPABASE_USER'],
+        'PASSWORD': config['SUPABASE_PASSWORD'],
+        'HOST': config['SUPABASE_HOST'],    
+        'PORT': config['SUPABASE_PORT'],
         'OPTIONS': {
-            'sslmode': 'prefer',
+            'sslmode': 'require',
         },
-    },
+    }
 }
+
 import os
 
 SWAGGER_USERNAME = os.getenv("SWAGGER_USERNAME")
@@ -58,21 +59,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 if not SECRET_KEY:
     raise ValueError("SECRET_KEY environment variable is not set")
 
-try:
-    config = {
-        "apiKey": os.getenv("FIREBASE_API_KEY"),
-        "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
-        "databaseURL": os.getenv("FIREBASE_DATABASE_URL"),
-        "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
-        "projectId": os.getenv("FIREBASE_PROJECT_ID"),
-        "appId": os.getenv("FIREBASE_APP_ID"),
-    }
-    firebase = pyrebase.initialize_app(config)
-    auth = firebase.auth()
-except Exception:
-    raise Exception(
-        "Firebase configuration credentials not found. Please add the configuration to the environment variables."
-    )
+
 
 SERVER_BASE_URL = os.getenv("SERVER_URL")
 
@@ -83,103 +70,27 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'api.kodkarta.io']
 # Application definition
 
 INSTALLED_APPS = [
-    "apps.mindPsy_app",
-    "apps.metaData",
-    "apps.healthUpdate",
-    "apps.chatApp", 
-    "apps.timeslots_app",
-    "apps.user_modelling",
-    # "core",
-    'apps.dashboard.apps.DashboardConfig',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
-    "rest_framework.authtoken",
-    "django.contrib.sites",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",
-    'drf_yasg',
-    "drf_spectacular",
-    'drf_spectacular_sidecar', 
+    "rest_framework_simplejwt.token_blacklist",
+    "corsheaders",
+    "apps.users",
+    "apps.products",
+    "apps.integrations",
+    "apps.assets",
+    "apps.policies",
+    "apps.insights",
+    "apps.visualization",
+    "apps.cloud_app",
 ]
 
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'MindPsy API',
-    'DESCRIPTION': 'API documentation for MindPsy application',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': True,
-    'SWAGGER_UI_DIST': 'SIDECAR',
-    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
-    'REDOC_DIST': 'SIDECAR',
-    'SCHEMA_PATH_PREFIX': '/',
-    'SCHEMA_COERCE_PATH_PK_SUFFIX': True,
-    'COMPONENT_SPLIT_REQUEST': True,
-    
-    # Added required OpenAPI specification
-    'OPENAPI_VERSION': '3.0.3',
-    'SWAGGER_SETTINGS': {
-        'SECURITY_DEFINITIONS': {
-            'Api-Key': {
-                'type': 'apiKey',
-                'in': 'header',
-                'name': 'Authorization'
-            }
-        }
-    },
-    
-    'CONTACT': {
-        'name': 'API Support',
-        'url': 'https://www.mindpsy.com/support/',
-        'email': 'support@mindpsy.com'
-    },
-    'LICENSE': {
-        'name': 'BSD License',
-        'url': 'https://opensource.org/licenses/BSD-3-Clause'
-    },
-    'SERVERS': [
-        {'url': '/', 'description': 'Local Development server'},
-        {'url': 'https://mindpsybackend.azurewebsites.net/', 'description': 'Production server'}
-    ],
-    'TAGS': [
-        {'name': 'Authentication', 'description': 'Authentication endpoints'},
-        {'name': 'User', 'description': 'User management endpoints'},
-    ],
-    'SWAGGER_UI_SETTINGS': {
-        'deepLinking': True,
-        'persistAuthorization': True,
-        'displayOperationId': True,
-        'defaultModelsExpandDepth': -1,
-        'defaultModelExpandDepth': 3,
-        'defaultModelRendering': 'model',
-        'displayRequestDuration': True,
-        'docExpansion': 'list',
-        'filter': True,
-        'showExtensions': True,
-        'showCommonExtensions': True,
-        'tryItOutEnabled': True
-    },
-    'REDOC_UI_SETTINGS': {
-        'hideDownloadButton': False,
-        'hideHostname': False,
-        'expandResponses': '200,201',
-        'pathInMiddlePanel': True,
-        'requiredPropsFirst': True,
-        'sortPropsAlphabetically': True
-    },
-    'PREPROCESSING_HOOKS': [],
-    'POSTPROCESSING_HOOKS': [],
-    'ENUM_NAME_OVERRIDES': {}
-}
 
-SWAGGER_API_KEY = os.getenv("mindpys_docs")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -191,7 +102,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
-    'mindPsy.middleware.SwaggerAuthMiddleware', 
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -200,18 +110,21 @@ AUTHENTICATION_BACKENDS = (
 )
 
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "apps.mindPsy_app.firebase_auth.firebase_authentication.FirebaseAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-        "apps.mindPsy_app.utils.authentication.TokenAuthentication",
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-    ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    ),
 }
 
-AUTH_USER_MODEL = "mindPsy_app.User"
+AUTH_USER_MODEL = "users.User"
 
 # email settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -336,85 +249,8 @@ LOGIN_REDIRECT_URL = 'docs'
 # Add this to your settings to make trailing slashes optional
 # APPEND_SLASH = True
 
-CELERY_BROKER_URL = "redis://localhost:6379/0"
-CELERY_RESULT_BACKEND = "redis://localhost:6379/1"
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_WORKER_HIJACK_ROOT_LOGGER = False  # Add this line
+
 
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "verbose": {
-            "format": "[{asctime}] {levelname} {name} {message}",
-            "style": "{",
-        },
-    },
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-            "formatter": "verbose",
-            "level": "INFO"
-        },
-        "file": {
-            "class": "logging.FileHandler",
-            "filename": os.path.join(LOG_DIR, "application.log"),
-            "formatter": "verbose",
-            "level": "INFO"
-        },
-        "celery_file": {  # Add a specific handler for Celery
-            "class": "logging.FileHandler",
-            "filename": os.path.join(LOG_DIR, "celery.log"),
-            "formatter": "verbose",
-            "level": "INFO"
-        },
-    },
-    "root": {
-        "handlers": ["console", "file"],
-        "level": "INFO",
-    },
-    "loggers": {  
-        "celery": {
-            "handlers": ["celery_file", "console"],
-            "level": "INFO",
-            "propagate": False,
-        },
-        "celery.task": {
-            "handlers": ["celery_file"],
-            "level": "INFO",
-            "propagate": False,
-        },
-        "celery.worker": {
-            "handlers": ["celery_file"],
-            "level": "INFO",
-            "propagate": False,
-        },
-    },
-}
-
-from celery.signals import setup_logging
-
-@setup_logging.connect
-def config_loggers(*args, **kwargs):
-    from logging.config import dictConfig
-    dictConfig(LOGGING)
-
-from celery.schedules import crontab
-
-CELERY_BEAT_SCHEDULE = {
-    'centroid-every-10-minutes': {
-        'task': 'apps.user_modelling.tasks.process_centroid_batch',
-        'schedule': crontab(minute='*/10'),
-    },
-    'daily-pipeline-5pm': {
-        'task': 'apps.user_modelling.tasks.run_daily_pipeline',
-        'schedule': crontab(hour=17, minute=0),
-    },
-}
-
-
 
