@@ -7,7 +7,6 @@ from functools import cached_property
 from django.utils.timezone import now
 from django.contrib.auth.hashers import make_password, check_password
 from functools import cached_property
-from mongoengine import Document, fields
 from django.contrib.auth.hashers import make_password, check_password
 import binascii
 import os

@@ -14,7 +14,6 @@ import pyrebase
 from dotenv import load_dotenv, dotenv_values
 from pathlib import Path
 import os
-from mongoengine import connect
 import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,29 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 dotenv_path = os.path.join(BASE_DIR, '.env')
 load_dotenv(dotenv_path)
 
-
-
 sys.path.insert(0, str(BASE_DIR))
 
 config = dotenv_values(".env")
 
-
 ROOT_URLCONF = 'mindPsy.urls'
 ROOT_URLCONF = os.getenv("ROOT_URLCONF", "mindPsy.urls")
-connect(host=os.getenv('DB_HOST'))
-MONGODB_DATABASES = {
-    "default": {
-        "name": os.getenv("DB_NAME"),
-        "host": os.getenv("DB_HOST"),
-        "username": os.getenv("DB_USERNAME"),
-        "password": os.getenv("DB_PASSWORD"),
-        "authentication_source": os.getenv("DB_AUTH_SOURCE"),
-        "tz_aware": True,
-        "ssl": True,
-    }
-}
-
-
 
 # Django Databases Configuration
 DATABASES = {
@@ -65,12 +47,8 @@ import os
 SWAGGER_USERNAME = os.getenv("SWAGGER_USERNAME")
 SWAGGER_PASSWORD = os.getenv("SWAGGER_PASSWORD")
 
-
 TIME_ZONE = 'Europe/London'  # Set the timezone to London
 USE_TZ = True
-
-
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -96,14 +74,11 @@ except Exception:
         "Firebase configuration credentials not found. Please add the configuration to the environment variables."
     )
 
-
-
 SERVER_BASE_URL = os.getenv("SERVER_URL")
 
 ALLOWED_HOSTS = [ "test.mindpsy.co.uk"]  # HTTP://mindPsy.com or ip
 
 # ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
-
 
 # Application definition
 
@@ -125,11 +100,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
-    "rest_framework_mongoengine",
     "rest_framework.authtoken",
-    "django_mongoengine",
-    "django_mongoengine.mongo_auth",
-    "django_mongoengine.mongo_admin",
     "django.contrib.sites",
     "allauth",
     "allauth.account",
@@ -208,7 +179,6 @@ SPECTACULAR_SETTINGS = {
     'ENUM_NAME_OVERRIDES': {}
 }
 
-
 SWAGGER_API_KEY = os.getenv("mindpys_docs")
 
 MIDDLEWARE = [
@@ -225,10 +195,8 @@ MIDDLEWARE = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-    # "apps.mindPsy_app.auth_backend.MongoAuthBackend",
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
-    "django_mongoengine.mongo_auth.backends.MongoEngineBackend",
 )
 
 REST_FRAMEWORK = {
@@ -242,8 +210,6 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ],
 }
-
-
 
 AUTH_USER_MODEL = "mindPsy_app.User"
 
@@ -273,7 +239,6 @@ SITE_ID = 1
 # Add your Google client ID and secret
 # SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '<your-client-id>'
 # SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '<your-client-secret>'
-
 
 CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = [
@@ -309,22 +274,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "mindPsy.wsgi.application"
 
-
-# MongoEngine specific settings
-
-
-MONGODB_HOST = os.getenv("DB_HOST")
-MONGODB_PORT = 27017  # or whatever port your MongoDB is running on
-MONGODB_DATABASE = os.getenv("DB_NAME")
-
-
-SESSION_ENGINE = "django_mongoengine.sessions"
+# Standard Django session engine
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
 SESSION_COOKIE_AGE = 86400  # 24 hours in seconds
 SESSION_COOKIE_NAME = 'mindpsy_sessionid'
 SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_HTTPONLY = True
 SESSION_SAVE_EVERY_REQUEST = True
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -343,7 +299,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -381,7 +336,6 @@ LOGIN_REDIRECT_URL = 'docs'
 # Add this to your settings to make trailing slashes optional
 # APPEND_SLASH = True
 
-
 CELERY_BROKER_URL = "redis://localhost:6379/0"
 CELERY_RESULT_BACKEND = "redis://localhost:6379/1"
 CELERY_ACCEPT_CONTENT = ["json"]
@@ -390,7 +344,6 @@ CELERY_WORKER_HIJACK_ROOT_LOGGER = False  # Add this line
 
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
-
 
 LOGGING = {
     "version": 1,
