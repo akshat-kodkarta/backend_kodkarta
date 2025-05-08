@@ -46,7 +46,7 @@ SECRET_KEY = "django-insecure-lo&n8&xff6z^dcbt5r!&8$!xk=w^#+yu$_3c^k!m7&+-v_w^ab
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['api.kodkarta.io']
 
 
 # Application definition
@@ -201,6 +201,19 @@ SIMPLE_JWT = {
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True  # Development only, set specific origins in production
 CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = [
+    'https://api.kodkarta.io',
+]
+
+
+CSRF_COOKIE_DOMAIN = '.kodkarta.io'
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+DEBUG=False
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
 
 
 import os

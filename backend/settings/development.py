@@ -76,7 +76,7 @@ except Exception:
 
 SERVER_BASE_URL = os.getenv("SERVER_URL")
 
-ALLOWED_HOSTS = [ "test.mindpsy.co.uk"]  # HTTP://mindPsy.com or ip
+ALLOWED_HOSTS = [ "api.kodkarta.io"]  # HTTP://mindPsy.com or ip
 
 # ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
@@ -241,13 +241,13 @@ SITE_ID = 1
 # SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '<your-client-secret>'
 
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
-    os.getenv("SERVER_URL"),
-    os.getenv("BASE_URL"),
-    'https://test.mindpsy.co.uk',
+    'https://api.kodkarta.io',
 ]
 
-CSRF_COOKIE_DOMAIN = '.mindpsy.co.uk'
+
+CSRF_COOKIE_DOMAIN = '.kodkarta.io'
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
