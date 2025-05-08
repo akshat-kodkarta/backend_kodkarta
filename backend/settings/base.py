@@ -41,7 +41,10 @@ config = dotenv_values(".env")
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-lo&n8&xff6z^dcbt5r!&8$!xk=w^#+yu$_3c^k!m7&+-v_w^ab"
+SECRET_KEY = os.getenv("SECRET_KEY")
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY environment variable is not set")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
