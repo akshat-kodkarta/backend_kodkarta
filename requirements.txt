@@ -41,11 +41,6 @@ urllib3==1.26.15
 pyrebase4==4.8.0
 firebase-admin==6.6.0
 
-# Data processing and visualization
-pandas==2.0.3  # Compatible with Python 3.8-3.11
-matplotlib==3.7.3
-plotly==5.19.0
-folium==0.15.1
 
 # Server and deployment
 gunicorn
