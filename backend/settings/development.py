@@ -76,7 +76,7 @@ except Exception:
 
 SERVER_BASE_URL = os.getenv("SERVER_URL")
 
-ALLOWED_HOSTS = [ "api.kodkarta.io"]  # HTTP://mindPsy.com or ip
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'api.kodkarta.io']
 
 # ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 

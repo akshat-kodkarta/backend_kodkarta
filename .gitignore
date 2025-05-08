@@ -182,3 +182,7 @@ cython_debug/
 
 
 github_explorer.log
+
+wsgi.py
+asgi.py
+manage.py
