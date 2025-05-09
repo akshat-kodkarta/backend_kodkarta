@@ -50,7 +50,7 @@ if not SECRET_KEY:
 DEBUG = True
 
 # Base allowed hosts - should be overridden in environment-specific settings
-ALLOWED_HOSTS = ['api.kodkarta.io', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['api.kodkarta.io', '127.0.0.1', 'localhost', '.kodkarta.io']
 
 
 # Application definition
@@ -203,22 +203,30 @@ SIMPLE_JWT = {
 }
 
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = True  # Development only, set specific origins in production
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'https://kodkarta.io',
+    'https://www.kodkarta.io',
+]
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     'https://api.kodkarta.io',
+    'https://kodkarta.io',
+    'https://www.kodkarta.io',
 ]
 
 
 CSRF_COOKIE_DOMAIN = '.kodkarta.io'
 
-# Base security settings - should be overridden in environment-specific settings
 # CSRF_COOKIE_SECURE = True
 # SESSION_COOKIE_SECURE = True
 # SECURE_SSL_REDIRECT = True
 DEBUG=True
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # USE_X_FORWARDED_HOST = True
+
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
 
 import os
 

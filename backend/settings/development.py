@@ -43,8 +43,6 @@ DATABASES = {
     }
 }
 
-import os
-
 SWAGGER_USERNAME = os.getenv("SWAGGER_USERNAME")
 SWAGGER_PASSWORD = os.getenv("SWAGGER_PASSWORD")
 
@@ -59,16 +57,18 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 if not SECRET_KEY:
     raise ValueError("SECRET_KEY environment variable is not set")
 
-
-
 SERVER_BASE_URL = os.getenv("SERVER_URL")
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'api.kodkarta.io']
-
-# ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+# Allow specific hosts for the Azure VM
+ALLOWED_HOSTS = [
+    '127.0.0.1', 
+    'localhost', 
+    'api.kodkarta.io', 
+    '.kodkarta.io',
+    '135.225.105.47',
+]
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -90,18 +90,15 @@ INSTALLED_APPS = [
     "apps.cloud_app",
 ]
 
-
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
-    # "allauth.account.middleware.AccountMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -126,7 +123,7 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = "users.User"
 
-# email settings
+# Email settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_PORT = os.getenv("EMAIL_PORT")
@@ -149,25 +146,29 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SITE_ID = 1
 
-# Add your Google client ID and secret
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '<your-client-id>'
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '<your-client-secret>'
-
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'https://kodkarta.io',
+    'https://www.kodkarta.io',
+]
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     'https://api.kodkarta.io',
+    'https://kodkarta.io',
+    'https://www.kodkarta.io',
 ]
-
 
 CSRF_COOKIE_DOMAIN = '.kodkarta.io'
 
+# Security settings
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
-DEBUG=False
+DEBUG = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
 
 TEMPLATES = [
     {
@@ -227,8 +228,8 @@ USE_TZ = True
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-
 ]
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -237,20 +238,31 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
+# Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Add these settings
 LOGIN_URL = 'swagger-login'
 LOGIN_REDIRECT_URL = 'docs'
 
-# Add this to your settings to make trailing slashes optional
-# APPEND_SLASH = True
-
-
-
+# Add logging configuration
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
+
+# JWT settings
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+}
 
