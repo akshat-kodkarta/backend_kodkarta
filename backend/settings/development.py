@@ -20,7 +20,7 @@ import sys
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 dotenv_path = os.path.join(BASE_DIR, '.env')
 load_dotenv(dotenv_path)
-
+print(BASE_DIR)
 sys.path.insert(0, str(BASE_DIR))
 
 config = dotenv_values(".env")
